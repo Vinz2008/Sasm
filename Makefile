@@ -8,6 +8,7 @@ all:
 
 clean:
 	rm $(TARGET)
+	rm ./*.o
 
 run:
 	./$(TARGET)
