@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
+#include "startswith.h"
 
 int compile() {
     FILE *fptr;
@@ -45,7 +45,7 @@ int compile() {
         printf("test");
         }
         */
-        int similarity_data_section;
+        int similarity_data_section = 0;
         for (i = 0; i < 12; i++)
         {
         if ("data section"[i] == line[i])
@@ -54,18 +54,20 @@ int compile() {
         }
         }
         printf("%i\n", similarity_data_section);
-        if (similarity_data_section <= 12)
+        if (similarity_data_section >= 12)
         {
         fprintf(fptr2, "section .data\n");
-        printf("test\n");
         }
-        
+        if (startswith("global start", "line") == 1)
+        {
+	fprintf(fptr2, "global _start\n");
+        }
+	printf("%i\n",startswith("global start", "line"));
         printf("%s\n", line);
     }
     printf("%d\n",i);
     fclose(fptr);
     fclose(fptr2);
-
     return 0;
 }
 
