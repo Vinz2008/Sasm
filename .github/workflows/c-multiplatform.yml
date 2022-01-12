@@ -61,7 +61,7 @@ jobs:
         make test
         ./test.bin
      - name: compile MacOS
-      if: startsWith(matrix.config.name, 'Ubuntu_Latest_GCC') 
+      if: startsWith(matrix.config.name, 'macOS Latest Clang') 
       run: |
         make
         make test
