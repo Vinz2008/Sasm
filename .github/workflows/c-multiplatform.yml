@@ -61,6 +61,6 @@ jobs:
         make test
         ./test.bin
     - name: compile Windows
-      if ("${ { runner.os } }" STREQUAL "Windows")
+      if: ("${ { runner.os } }" STREQUAL "Windows")
         run: |
           
