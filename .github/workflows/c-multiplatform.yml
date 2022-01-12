@@ -60,7 +60,7 @@ steps:
       make
       make test
       ./test.bin
-   - name: compile MacOS
+  - name: compile MacOS
     if: startsWith(matrix.config.name, 'macOS Latest Clang') 
     run: |
       make
