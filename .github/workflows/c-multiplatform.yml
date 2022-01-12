@@ -19,7 +19,6 @@ jobs:
         - {
             name: "Windows Latest MSVC",
             os: windows-latest,
-            artifact: "windows_msvc.7z",
             build_type: "Release",
             cc: "cl",
             cxx: "cl",
