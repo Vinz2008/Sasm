@@ -6,10 +6,10 @@ int main() {
     int a = startswith("global", sample);
     int b = startswith("globl", sample);
     if (a == 1 && b == 0) {
-        printf("Success")
+        printf("Success");
     }
     else {
-        printf("failed")
+        printf("failed");
     }
     
 
