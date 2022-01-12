@@ -70,8 +70,4 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install compiler
-      uses: rlalik/setup-cpp-compiler
-      with:
-        compiler: latest
     
