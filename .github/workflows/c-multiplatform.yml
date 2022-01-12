@@ -52,17 +52,17 @@ jobs:
             generators: "Ninja"
           }
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: compile Ubuntu_Latest_GCC
-      if: startsWith(matrix.config.name, 'Ubuntu_Latest_GCC') 
-      run: |
-        make
-        make test
-        ./test.bin
-     - name: compile MacOS
-      if: startsWith(matrix.config.name, 'macOS Latest Clang') 
-      run: |
-        make
-        make test
-        ./test.bin
+steps:
+  - uses: actions/checkout@v2
+  - name: compile Ubuntu_Latest_GCC
+    if: startsWith(matrix.config.name, 'Ubuntu_Latest_GCC') 
+    run: |
+      make
+      make test
+      ./test.bin
+   - name: compile MacOS
+    if: startsWith(matrix.config.name, 'macOS Latest Clang') 
+    run: |
+      make
+      make test
+      ./test.bin
