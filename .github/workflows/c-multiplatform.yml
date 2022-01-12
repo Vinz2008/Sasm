@@ -60,7 +60,9 @@ jobs:
         make
         make test
         ./test.bin
-    - name: compile Windows
-      if: ("${ { runner.os } }" STREQUAL "Windows")
-        run: |
-          
+     - name: compile MacOS
+      if: startsWith(matrix.config.name, 'Ubuntu_Latest_GCC') 
+      run: |
+        make
+        make test
+        ./test.bin
