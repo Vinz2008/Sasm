@@ -68,4 +68,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
+    - name: compile
+      if: startsWith(matrix.config.name, 'Ubuntu_Latest_GCC') 
+      run: |
+        make
+        make test
+        ./test.bin
