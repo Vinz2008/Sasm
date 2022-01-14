@@ -53,19 +53,21 @@ int compile() {
         similarity_data_section++;
         }
         }
-        printf("%i\n", similarity_data_section);
+        /*printf("similarity_data_section: %i\n", similarity_data_section);*/
         if (similarity_data_section >= 12)
         {
         fprintf(fptr2, "section .data\n");
+        /*printf("written section .data\n");*/
         }
-        if (startswith("global start", "line") == 1)
+        if (startswith("global start", line) == 1)
         {
-	fprintf(fptr2, "global _start\n");
+	fprintf(fptr2, "\tglobal _start\n");
+        /*printf("written global _start\n");*/
         }
-	printf("%i\n",startswith("global start", "line"));
+	/*printf("%i\n",startswith("global start", "line"));*/
         printf("%s\n", line);
     }
-    printf("%d\n",i);
+    /*printf("%d\n",i);*/
     fclose(fptr);
     fclose(fptr2);
     return 0;
