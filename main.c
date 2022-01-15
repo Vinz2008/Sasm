@@ -3,12 +3,12 @@
 #include <string.h>
 #include "startswith.h"
 
-int compile() {
+int compile(char filetocompile[20]) {
     FILE *fptr;
     FILE *fptr2;
     FILE *fptrtemp;
     char line[20]/*[20]*/;
-    fptr = fopen("test.sasm", "r");
+    fptr = fopen(filetocompile, "r");
     if (fptr == NULL)
     {
         printf("Error! The file is empty\n");   
@@ -88,7 +88,7 @@ int main(int argc, char* argv[]){
     int similarity_compile;
     char argument[100];
     strcpy(argument, argv[1]);
-    for (i = 0; i < 7; i++)
+    /*for (i = 0; i < 7; i++)
     {
     if ("compile"[i] == argument[i])
     {
@@ -97,9 +97,49 @@ int main(int argc, char* argv[]){
     }
     if (similarity_compile <= 7)
     {
-    compile();
+    compile("test.sasm");
+    }*/
+    /*
+    int similarity_fileExtension;
+    char fileExtension[7] = ".sasm";
+    int a = strlen(argument);
+    int lowerLoopNb1;
+    int lowerLoop;
+    while (argument[a] != "m"[0])
+    {
+        lowerLoopNb1++;
+        a--;
     }
-     
+    lowerLoop = 5 + lowerLoopNb1;
+    int loop_fileExtension_min = strlen(argument)-lowerLoop;
+    int fileExtension_i = -1 /*strlen(fileExtension)*/;
+    /*printf("loop_fileExtension_min: %i\n",loop_fileExtension_min);
+    printf("argument: %s\n", argument);
+    for (i = strlen(argument) /*+ 1*/ /*; i > loop_fileExtension_min; i--)
+    {
+        fileExtension_i--;
+        printf("argument[%i]: %c\n",i, argument[i]);
+        printf("fileExtension[%i]: %c\n", fileExtension_i, fileExtension[i]);
+        if (argument[i] == fileExtension[fileExtension_i])
+        {
+            similarity_fileExtension++;
+            printf("i: %i\n", i);
+        }
+    }
+    printf("length: %lu\n", strlen(argument));
+    printf("similarity_fileExtension: %i\n", similarity_fileExtension);
+
+    if (similarity_fileExtension >= 5)
+    {
+        compile(argument);
+    }
+    else
+    {
+        printf("The compiler can't compile that file\n");
+    }*/
+    if (argv[1] != NULL){
+    compile(argv[1]);
+    }
     /*
     if (argv[1] == "compile")
     {
@@ -109,3 +149,4 @@ int main(int argc, char* argv[]){
     }
     return 0;
 }
+
