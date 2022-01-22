@@ -59,10 +59,14 @@ int compile(char filetocompile[20]) {
         fprintf(fptr2, "section .data\n");
         /*printf("written section .data\n");*/
         }
-        if (startswith("global start", line) == 1)
+        if (startswith("start", line) == 1)
         {
-	fprintf(fptr2, "\tglobal _start\n");
+	fprintf(fptr2, "\tglobal _start\n _start:\n");
         /*printf("written global _start\n");*/
+        }
+        if (startswith("text section", line) == 1)
+        {
+        fprintf(fptr2, "section .text\n");
         }
 	/*printf("%i\n",startswith("global start", "line"));*/
         printf("%s\n", line);
