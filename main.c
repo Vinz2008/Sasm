@@ -72,6 +72,7 @@ int compile(char filetocompile[20]) {
         printf("%s\n", line);
     }
     /*printf("%d\n",i);*/
+    fprintf(fptr2, "\tret\n");
     fclose(fptr);
     fclose(fptr2);
     return 0;

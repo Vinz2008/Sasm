@@ -16,7 +16,7 @@ clean:
 	rm ./*.o
 
 run:
-	./$(TARGET)
+	./main.out test.sasm
 test:
 	$(CC) -c -g startswith.c
 	$(CC) -c -g test.c
