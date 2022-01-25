@@ -59,14 +59,27 @@ int compile(char filetocompile[20]) {
         fprintf(fptr2, "section .data\n");
         /*printf("written section .data\n");*/
         }
-        if (startswith("start", line) == 1)
+        else if (startswith("start", line) == 1)
         {
 	fprintf(fptr2, "\tglobal _start\n _start:\n");
         /*printf("written global _start\n");*/
         }
-        if (startswith("text section", line) == 1)
+        else if (startswith("text section", line) == 1)
         {
         fprintf(fptr2, "section .text\n");
+        }
+        else if (startswith("move", line) || startswith("\tmove", line)) 
+        {
+        fprintf(fptr2, "\tmov\n");
+        } 
+        else if (startswith("#", line)) 
+        {
+        fprintf(fptr2, ";");
+        for (i = 1; i < strlen(line) - 1; i++) 
+        {
+        fprintf(fptr2, "%c", line[i]);
+        }
+        fprintf(fptr2, "\n");
         }
 	/*printf("%i\n",startswith("global start", "line"));*/
         printf("%s\n", line);

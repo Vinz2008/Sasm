@@ -1,3 +1,5 @@
 data section
 text section
 start
+	move
+# comment
