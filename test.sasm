@@ -1,5 +1,5 @@
 data section
 text section
 start
-	move
+	move test
 # comment

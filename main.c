@@ -17,6 +17,9 @@ int compile(char filetocompile[20]) {
     /*fgets(line, "%s", fptr);
     printf("%s", line);*/
     int i;
+    int posStartTo;
+    int loopEndTo;
+    int loopStartFrom;
     fptrtemp = fopen("code.asm", "w");
     fclose(fptrtemp);
     fptr2 = fopen("code.asm", "a");
@@ -71,6 +74,37 @@ int compile(char filetocompile[20]) {
         else if (startswith("move", line) || startswith("\tmove", line)) 
         {
         fprintf(fptr2, "\tmov\n");
+        /*printf("move after : %c\n", line[6]); */
+        posStartTo = 0;
+        int pos;
+        char movFrom[10];
+        char movTo[10];
+        for (pos = 6; pos < strlen(line); pos++)
+        {
+        if (line[pos] == "<") 
+        {
+        if (line[pos + 1] == "=") 
+        {
+        if (line[pos + 2] == " ") 
+        {
+        loopStartFrom = pos + 3;
+        } else {
+        loopStartFrom = pos + 2;
+        }
+        if (line[pos - 1] == " ")
+        {
+        loopEndTo = pos - 2;
+        } else {
+        loopEndTo = pos - 1;
+        }         
+        }
+        }
+        }
+        for (i = 6; i < loopEndTo; i++) {
+        strncat(movTo, &line[i], 1);
+        }
+        printf("%s", movTo);
+ 
         } 
         else if (startswith("#", line)) 
         {
