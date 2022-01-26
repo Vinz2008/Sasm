@@ -7,7 +7,7 @@ int compile(char filetocompile[20]) {
     FILE *fptr;
     FILE *fptr2;
     FILE *fptrtemp;
-    char line[20]/*[20]*/;
+    char line[40]/*[20]*/;
     fptr = fopen(filetocompile, "r");
     if (fptr == NULL)
     {
@@ -79,19 +79,24 @@ int compile(char filetocompile[20]) {
         int pos;
         char movFrom[10];
         char movTo[10];
-        for (pos = 6; pos < strlen(line); pos++)
+        for (pos = 6; pos <= strlen(line); pos++)
         {
-        if (line[pos] == "<") 
+        printf("line[pos] : %c\n", line[pos]);
+        /*printf("< lenth : %i\n", strlen("<"));*/
+        if (line[pos] == "<"[0]) 
         {
-        if (line[pos + 1] == "=") 
+        printf("< detected\n");
+        if (line[pos + 1] == "="[0]) 
         {
-        if (line[pos + 2] == " ") 
+        printf("= detected\n");
+        printf("<= detected\n");
+        if (line[pos + 2] == " "[0]) 
         {
         loopStartFrom = pos + 3;
         } else {
         loopStartFrom = pos + 2;
         }
-        if (line[pos - 1] == " ")
+        if (line[pos - 1] == " "[0])
         {
         loopEndTo = pos - 2;
         } else {
@@ -100,10 +105,15 @@ int compile(char filetocompile[20]) {
         }
         }
         }
-        for (i = 6; i < loopEndTo; i++) {
-        strncat(movTo, &line[i], 1);
+        int lengthMovTo = strlen(movTo);
+        for (i = 6; i <= loopEndTo; i++) {
+        /*strncat(movTo, line[i], 1);*/
+        lengthMovTo = strlen(movTo);
+        printf("lengthMovTo: %i\n", lengthMovTo);
+        movTo[lengthMovTo] = line[i];
+        printf("i: %i\n", i);
         }
-        printf("%s", movTo);
+        printf("movTo %s\n", movTo);
  
         } 
         else if (startswith("#", line)) 
