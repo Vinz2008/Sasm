@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "startswith.h"
+#include "libs/startswith.h"
 
 int compile(char filetocompile[20]) {
     FILE *fptr;

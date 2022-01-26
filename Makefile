@@ -1,11 +1,13 @@
 CC=gcc
-TARGET=main.o
+TARGET=main.out
 FLAGS=-Wstring-compare -Wformat
 
 all:
-	$(CC) -c -g startswith.c
-	$(CC) -c -g main.c
-	$(CC) -o main.out main.o startswith.o
+	mkdir build
+	$(CC) -c -g libs/startswith.c -o build/startswith.o
+	$(CC) -c -g main.c -o build/main.o
+	$(CC) -o main.out build/main.o build/startswith.o
+	rm -rf build
 
 old:
 	$(CC) main.c -o $(TARGET) $(FLAGS)
@@ -13,11 +15,9 @@ old:
 
 clean:
 	rm $(TARGET)
-	rm ./*.o
-
 run:
 	./main.out test.sasm
 test:
-	$(CC) -c -g startswith.c
-	$(CC) -c -g test.c
-	$(CC) -o test.bin test.o startswith.o
+	$(CC) -c -g libs/startswith.c -o libs/startswith.o
+	$(CC) -c -g tests/test.c -o tests/test.o
+	$(CC) -o test.out tests/test.o libs/startswith.o
