@@ -1,5 +1,5 @@
 data section
 text section
 start
-	move test <= 0xtest
+	move edx <= 20
 # comment

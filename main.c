@@ -73,7 +73,7 @@ int compile(char filetocompile[20]) {
         }
         else if (startswith("move", line) || startswith("\tmove", line)) 
         {
-        fprintf(fptr2, "\tmov\n");
+        fprintf(fptr2, "\tmov ");
         /*printf("move after : %c\n", line[6]); */
         posStartTo = 0;
         int pos;
@@ -105,15 +105,22 @@ int compile(char filetocompile[20]) {
         }
         }
         }
-        int lengthMovTo = strlen(movTo);
+        int lengthMovTo;
+        char tempWrite; 
         for (i = 6; i <= loopEndTo; i++) {
-        /*strncat(movTo, line[i], 1);*/
-        lengthMovTo = strlen(movTo);
-        printf("lengthMovTo: %i\n", lengthMovTo);
-        movTo[lengthMovTo] = line[i];
+        tempWrite = line[i];
+	fprintf(fptr2, "%c", tempWrite);
+        /*movTo[lengthMovTo] = line[i];*/
         printf("i: %i\n", i);
         }
-        printf("movTo %s\n", movTo);
+	fprintf(fptr2, ",");
+        for (i = loopStartFrom; i<= strlen(line); i++) 
+	{
+        tempWrite = line[i];
+	fprintf(fptr2, "%c", tempWrite);
+        }
+	fprintf(fptr2, "\n");
+       /* printf("movTo %s\n", movTo);*/
  
         } 
         else if (startswith("#", line)) 
