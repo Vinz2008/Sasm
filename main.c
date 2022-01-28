@@ -24,30 +24,7 @@ int compile(char filetocompile[20]) {
     fclose(fptrtemp);
     fptr2 = fopen("code.asm", "a");
     while (fgets(line,150, fptr)) {
-        /*if (fgets(line,150, fptr) == NULL) break;*/
         i++;
-        /*if (strlen("data section") == strlen(line)) {
-            printf("true");
-        }
-        else {
-            printf("false");
-        }
-        printf("%lu\n", strlen("data section"));
-        printf("%lu\n", strlen(line));
-        printf("%lu\n", strlen("data section\0\n"));
-        printf("%c\n", line[13]);
-        printf("%c\n", "data section\0"[12]);
-        for (i = 0; i <= strlen(line); i++)
-        {
-        printf("%c\n", line[i]);
-        }
-        printf("end");
-        if ("data section\0\n" == line)
-        {
-        fprintf(fptr2, "section .data");
-        printf("test");
-        }
-        */
         int similarity_data_section = 0;
         for (i = 0; i < 12; i++)
         {
