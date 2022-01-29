@@ -100,6 +100,60 @@ int compile(char filetocompile[20]) {
        /* printf("movTo %s\n", movTo);*/
  
         } 
+
+	else if (startswith("compare", line) || startswith("\tcompare", line)) 
+        {
+        fprintf(fptr2, "\tcmp ");
+        /*printf("move after : %c\n", line[6]); */
+        posStartTo = 0;
+        int pos;
+        char movFrom[10];
+        char movTo[10];
+        for (pos = 9; pos <= strlen(line); pos++)
+        {
+        printf("line[pos] : %c\n", line[pos]);
+        /*printf("< lenth : %i\n", strlen("<"));*/
+        if (line[pos] == "<"[0]) 
+        {
+        printf("< detected\n");
+        if (line[pos + 1] == "="[0]) 
+        {
+        printf("= detected\n");
+        printf("<= detected\n");
+        if (line[pos + 2] == " "[0]) 
+        {
+        loopStartFrom = pos + 3;
+        } else {
+        loopStartFrom = pos + 2;
+        }
+        if (line[pos - 1] == " "[0])
+        {
+        loopEndTo = pos - 2;
+        } else {
+        loopEndTo = pos - 1;
+        }         
+        }
+        }
+        }
+        int lengthMovTo;
+        char tempWrite; 
+        for (i = 9; i <= loopEndTo; i++) {
+        tempWrite = line[i];
+	fprintf(fptr2, "%c", tempWrite);
+        /*movTo[lengthMovTo] = line[i];*/
+        printf("i: %i\n", i);
+        }
+	fprintf(fptr2, ",");
+        for (i = loopStartFrom; i<= strlen(line); i++) 
+	{
+        tempWrite = line[i];
+	fprintf(fptr2, "%c", tempWrite);
+        }
+	fprintf(fptr2, "\n");
+       /* printf("movTo %s\n", movTo);*/
+ 
+        } 
+
         else if (startswith("#", line)) 
         {
         fprintf(fptr2, ";");
