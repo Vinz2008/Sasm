@@ -41,7 +41,7 @@ int compile(char filetocompile[20]) {
         }
         else if (startswith("start", line) == 1)
         {
-	fprintf(fptr2, "\tglobal _start\n _start:\n");
+	fprintf(fptr2, "\tglobal _start\n_start:\n");
         /*printf("written global _start\n");*/
         }
         else if (startswith("text section", line) == 1)
@@ -243,6 +243,15 @@ int compile(char filetocompile[20]) {
         //CALL
         else if (startswith("launch", line) || startswith("\tlaunch", line)) {
         fprintf(fptr2, "\tcall ");
+        int z = 0;
+        char functionName[20];
+        for (i = 8; i <= strlen(line); i++) {
+                functionName[z] = line[i];
+                z++;
+        }
+        if (startswith("start", functionName)) {
+                fprintf(fptr2, "_");
+        }
         posStartTo = 0;
         int pos;
         char movFrom[10];

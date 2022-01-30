@@ -5,5 +5,5 @@ start
 	compare 20 <= edx
 	add eax <= ebx
 	and eax <= 0x7575
-	launch _start
+	launch start
 # comment
