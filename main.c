@@ -273,6 +273,31 @@ int compile(char filetocompile[20]) {
         }
         fprintf(fptr2, "\n");
         }
+	/*
+	else
+        {
+        char *token = strtok(line, " ");
+        int c = 0;
+        char lineList[10][10];
+ 	while (token != NULL)
+        {
+        strcpy(lineList[c], token);
+        token = strtok(NULL, " ");
+        c++;
+        }
+	int sizeLineList = 0;
+	int d= 0;
+	while (lineList[d] != "") 
+	{
+	sizeLineList++;
+	d++;
+	}
+        for (i = 0; i < sizeLineList; i++)
+        {
+        printf("lineList: %s", lineList[i]);
+	fprintf(fptr2, "%s\n",lineList[i]);
+        }
+        }*/
         printf("%s\n", line);
     }
     fprintf(fptr2, "\tret\n");

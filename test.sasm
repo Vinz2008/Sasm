@@ -1,4 +1,5 @@
 data section
+#	db hello
 text section
 start
 	move edx <= 20
