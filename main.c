@@ -277,6 +277,8 @@ int compile(char filetocompile[20]) {
 	else
         {
         int c = 0;
+	int posLastQuote;
+	int posFirstQuote;
 	int sizeLineList = 0;
         char lineList[10][10];
 	char * pch = strtok (line," ");
@@ -284,9 +286,36 @@ int compile(char filetocompile[20]) {
 	{
 	sizeLineList++;
     	printf ("%s\n",pch);
+	/*if (startswith("\"", pch)) 
+	{
+	for (i = 0; i <= strlen(line); i++)
+  	{
+  	if(line[i] == '"')  
+	{
+	posFirstQuote = i;
+	break;    	
+ 	}
+	}
+	for (i = posFirstQuote; i <= strlen(line); i++)
+        {
+        if(line[i] == '"')
+        {
+        posLastQuote = i;
+        break;
+        }
+        }
+	for (i = posFirstQuote; i < posLastQuote; i++) 
+	{
+	strncat(lineList[sizeLineList], &line[i], 1); 
+	}
+	break;
+	}
+	else 
+	{*/
 	strcpy(lineList[c], pch);
     	//pch = strtok (NULL, " \t");
 	pch = strtok (NULL, " ");
+	//}
 	c++;
 	}
 	int d= 0;
