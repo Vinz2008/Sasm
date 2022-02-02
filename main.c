@@ -273,31 +273,42 @@ int compile(char filetocompile[20]) {
         }
         fprintf(fptr2, "\n");
         }
-	/*
+	
 	else
         {
-        char *token = strtok(line, " ");
         int c = 0;
-        char lineList[10][10];
- 	while (token != NULL)
-        {
-        strcpy(lineList[c], token);
-        token = strtok(NULL, " ");
-        c++;
-        }
 	int sizeLineList = 0;
+        char lineList[10][10];
+	char * pch = strtok (line," ");
+	while (pch != NULL)
+	{
+	sizeLineList++;
+    	printf ("%s\n",pch);
+	strcpy(lineList[c], pch);
+    	//pch = strtok (NULL, " \t");
+	pch = strtok (NULL, " ");
+	c++;
+	}
 	int d= 0;
-	while (lineList[d] != "") 
+	/*while (lineList[d] != "") 
 	{
 	sizeLineList++;
 	d++;
-	}
+	}*/
+	/*
         for (i = 0; i < sizeLineList; i++)
         {
         printf("lineList: %s", lineList[i]);
-	fprintf(fptr2, "%s\n",lineList[i]);
-        }
+	fprintf(fptr2, "%s ",lineList[i]);
         }*/
+	if (startswith("char", lineList[1])) 
+	{
+	fprintf(fptr2, "%s ", lineList[0]);
+	fprintf(fptr2, "DB ");
+	fprintf(fptr2, "%s ", lineList[2]);
+	}
+	fprintf(fptr2, "\n");
+        }
         printf("%s\n", line);
     }
     fprintf(fptr2, "\tret\n");
