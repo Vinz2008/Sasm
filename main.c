@@ -276,6 +276,10 @@ int compile(char filetocompile[20]) {
 	
 	else
         {
+        printf("line: %s", line);
+        printf("strlen(line) : %li\n", strlen(line));
+        char line2[40];
+        strcpy(line2, line);
         int c = 0;
 	int posLastQuote;
 	int posFirstQuote;
@@ -285,37 +289,47 @@ int compile(char filetocompile[20]) {
 	while (pch != NULL)
 	{
 	sizeLineList++;
-    	printf ("%s\n",pch);
-	/*if (startswith("\"", pch)) 
+    	printf ("pch : %s\n",pch);
+        printf("startswith(pch) : %i\n",startswith("\"", pch));
+	if (startswith("\"", pch)) 
 	{
-	for (i = 0; i <= strlen(line); i++)
+	for (i = 0; i < /*strlen(line)*/ 19; i++)
   	{
-  	if(line[i] == '"')  
+  	if(line2[i] == '"')  
 	{
 	posFirstQuote = i;
+
+        printf ("posFirstQuote: %i\n", posFirstQuote);
 	break;    	
  	}
 	}
-	for (i = posFirstQuote; i <= strlen(line); i++)
+        printf("strlen(line2) : %li\n", strlen(line2));
+	for (i = posFirstQuote + 1; i < strlen(line2); i++)
         {
-        if(line[i] == '"')
+        if(line2[i] == '"')
         {
         posLastQuote = i;
+        printf ("posLastQuote: %i\n", posLastQuote);
         break;
         }
         }
-	for (i = posFirstQuote; i < posLastQuote; i++) 
+        int w = 0;
+        printf("lineList[sizeLineList] : %s", lineList[sizeLineList]);
+	for (i = posFirstQuote; i <= posLastQuote + 1; i++) 
 	{
-	strncat(lineList[sizeLineList], &line[i], 1); 
+	lineList[sizeLineList][w] = line[i]; 
+        printf("lineList[sizeLineList] %s\n", lineList[sizeLineList]);
+        w++;
 	}
+        //lineList[sizeLineList][w] = "\0";
 	break;
 	}
 	else 
-	{*/
+	{
 	strcpy(lineList[c], pch);
     	//pch = strtok (NULL, " \t");
 	pch = strtok (NULL, " ");
-	//}
+	}
 	c++;
 	}
 	int d= 0;
@@ -334,7 +348,8 @@ int compile(char filetocompile[20]) {
 	{
 	fprintf(fptr2, "%s ", lineList[0]);
 	fprintf(fptr2, "DB ");
-	fprintf(fptr2, "%s ", lineList[2]);
+        printf("lineList[2] %s\n ", lineList[sizeLineList]);
+	fprintf(fptr2, "%s ", lineList[sizeLineList]);
 	}
 	fprintf(fptr2, "\n");
         }
