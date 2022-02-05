@@ -264,6 +264,7 @@ int compile(char filetocompile[20]) {
         printf("i: %i\n", i);
 	fprintf(fptr2, "\n");
         }
+        // comments
         else if (startswith("#", line)) 
         {
         fprintf(fptr2, ";");
@@ -273,7 +274,24 @@ int compile(char filetocompile[20]) {
         }
         fprintf(fptr2, "\n");
         }
-	
+	//INTERRUPT
+        else if (startswith("interrupt", line) || startswith("\tinterrupt", line)) {
+        printf("int\n");
+        fprintf(fptr2, "\tint ");
+        int z = 0;
+        posStartTo = 0;
+        int pos;
+        char movFrom[10];
+        char movTo[10];
+        for (pos = 11; pos <= strlen(line); pos++)
+        {
+        printf("line[pos] : %c\n", line[pos]);
+        fprintf(fptr2, "%c", line[pos]);
+        }
+
+	fprintf(fptr2, "\n");
+        }
+
 	else
         {
         printf("line: %s", line);
@@ -293,7 +311,7 @@ int compile(char filetocompile[20]) {
         printf("startswith(pch) : %i\n",startswith("\"", pch));
 	if (startswith("\"", pch)) 
 	{
-	for (i = 0; i < /*strlen(line)*/ 19; i++)
+	for (i = 0; i < strlen(line2); i++)
   	{
   	if(line2[i] == '"')  
 	{

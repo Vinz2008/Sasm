@@ -7,4 +7,5 @@ start
 	add eax <= ebx
 	and eax <= 0x7575
 	launch start
+	interrupt 0x80	
 # comment
