@@ -5,8 +5,9 @@ FLAGS=-Wstring-compare -Wformat
 all:
 	mkdir build
 	$(CC) -c -g libs/startswith.c -o build/startswith.o
+	$(CC) -c -g libs/detect_arch.c -o build/detect_arch.o
 	$(CC) -c -g main.c -o build/main.o
-	$(CC) -o main.out build/main.o build/startswith.o
+	$(CC) -o main.out build/main.o build/startswith.o build/detect_arch.o
 	rm -rf build
 
 old:
