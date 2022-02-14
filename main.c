@@ -369,6 +369,13 @@ int compile(char filetocompile[20]) {
         printf("lineList[2] %s\n ", lineList[sizeLineList]);
 	fprintf(fptr2, "%s ", lineList[sizeLineList]);
 	}
+	if (startswith("twoChar", lineList[1])) 
+	{
+	fprintf(fptr2, "%s ", lineList[0]);
+	fprintf(fptr2, "DW ");
+        printf("lineList[2] %s\n ", lineList[sizeLineList]);
+	fprintf(fptr2, "%s ", lineList[sizeLineList]);
+	}
 	fprintf(fptr2, "\n");
         }
         printf("%s\n", line);

@@ -1,5 +1,6 @@
 data section
 	hello char "hello"
+	hello2 twoChar "hello2"
 text section
 start
 	move edx <= 20
