@@ -56,7 +56,7 @@ int compile(char filetocompile[20]) {
         int pos;
         char movFrom[10];
         char movTo[10];
-        for (pos = 6; pos <= strlen(line); pos++)
+        for (pos = 6; pos < strlen(line); pos++)
         {
         printf("line[pos] : %c\n", line[pos]);
         if (line[pos] == "<"[0]) 
@@ -86,7 +86,7 @@ int compile(char filetocompile[20]) {
         printf("i: %i\n", i);
         }
 	fprintf(fptr2, ",");
-        for (i = loopStartFrom; i<= strlen(line); i++) 
+        for (i = loopStartFrom; i< strlen(line); i++) 
 	{
         tempWrite = line[i];
 	fprintf(fptr2, "%c", tempWrite);
@@ -102,7 +102,7 @@ int compile(char filetocompile[20]) {
         int pos;
         char movFrom[10];
         char movTo[10];
-        for (pos = 9; pos <= strlen(line); pos++)
+        for (pos = 9; pos < strlen(line); pos++)
         {
         printf("line[pos] : %c\n", line[pos]);
         if (line[pos] == "<"[0]) 
@@ -135,7 +135,7 @@ int compile(char filetocompile[20]) {
         printf("i: %i\n", i);
         }
 	fprintf(fptr2, ",");
-        for (i = loopStartFrom; i<= strlen(line); i++) 
+        for (i = loopStartFrom; i< strlen(line); i++) 
 	{
         tempWrite = line[i];
 	fprintf(fptr2, "%c", tempWrite);
@@ -151,7 +151,7 @@ int compile(char filetocompile[20]) {
         int pos;
         char movFrom[10];
         char movTo[10];
-        for (pos = 5; pos <= strlen(line); pos++)
+        for (pos = 5; pos < strlen(line); pos++)
         {
         printf("line[pos] : %c\n", line[pos]);
         if (line[pos] == "<"[0]) 
@@ -184,7 +184,7 @@ int compile(char filetocompile[20]) {
         printf("i: %i\n", i);
         }
 	fprintf(fptr2, ",");
-        for (i = loopStartFrom; i<= strlen(line); i++) 
+        for (i = loopStartFrom; i< strlen(line); i++) 
 	{
         tempWrite = line[i];
 	fprintf(fptr2, "%c", tempWrite);
@@ -200,7 +200,7 @@ int compile(char filetocompile[20]) {
         int pos;
         char movFrom[10];
         char movTo[10];
-        for (pos = 5; pos <= strlen(line); pos++)
+        for (pos = 5; pos < strlen(line); pos++)
         {
         printf("line[pos] : %c\n", line[pos]);
         if (line[pos] == "<"[0]) 
@@ -216,12 +216,12 @@ int compile(char filetocompile[20]) {
         } else {
         loopStartFrom = pos + 2;
         }
-        if (line[pos - 1] == " "[0])
+        /*if (line[pos - 1] == " "[0])
         {
         loopEndTo = pos - 2;
-        } else {
+        } else {*/
         loopEndTo = pos - 1;
-        }         
+        /*}  */       
         }
         }
         }
@@ -233,7 +233,7 @@ int compile(char filetocompile[20]) {
         printf("i: %i\n", i);
         }
 	fprintf(fptr2, ",");
-        for (i = loopStartFrom; i<= strlen(line); i++) 
+        for (i = loopStartFrom; i< strlen(line); i++) 
 	{
         tempWrite = line[i];
 	fprintf(fptr2, "%c", tempWrite);
@@ -245,7 +245,7 @@ int compile(char filetocompile[20]) {
         fprintf(fptr2, "\tcall ");
         int z = 0;
         char functionName[20];
-        for (i = 8; i <= strlen(line); i++) {
+        for (i = 8; i < strlen(line); i++) {
                 functionName[z] = line[i];
                 z++;
         }
@@ -256,7 +256,7 @@ int compile(char filetocompile[20]) {
         int pos;
         char movFrom[10];
         char movTo[10];
-        for (pos = 8; pos <= strlen(line); pos++)
+        for (pos = 8; pos < strlen(line); pos++)
         {
         printf("line[pos] : %c\n", line[pos]);
         fprintf(fptr2, "%c", line[pos]);
@@ -283,7 +283,7 @@ int compile(char filetocompile[20]) {
         int pos;
         char movFrom[10];
         char movTo[10];
-        for (pos = 11; pos <= strlen(line); pos++)
+        for (pos = 11; pos < strlen(line); pos++)
         {
         printf("line[pos] : %c\n", line[pos]);
         fprintf(fptr2, "%c", line[pos]);
