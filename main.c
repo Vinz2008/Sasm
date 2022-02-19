@@ -288,10 +288,21 @@ int compile(char filetocompile[20]) {
         printf("line[pos] : %c\n", line[pos]);
         fprintf(fptr2, "%c", line[pos]);
         }
-
 	fprintf(fptr2, "\n");
         }
 
+	//ASEMBLY CODE USAGE
+	else if(startswith("asm",line) || startswith("\tasm",line)){
+	printf("asm\n");
+	fprintf(fptr2, "\t");
+	int pos;
+	for (pos = 5; pos < strlen(line); pos++) 
+	{
+	printf("line[pos] : %c\n", line[pos]);
+        fprintf(fptr2, "%c", line[pos]);
+	}
+	fprintf(fptr2, "\n");
+	}
 	else
         {
         printf("line: %s", line);

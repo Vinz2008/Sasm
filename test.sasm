@@ -5,6 +5,7 @@ text section
 start
 	move edx <= 20
 	compare 20 <= edx
+	asm ja loc
 	add eax <= ebx
 	and eax <= 0x7575
 	launch start
