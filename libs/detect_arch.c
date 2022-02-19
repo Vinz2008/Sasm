@@ -12,6 +12,9 @@
 #elif __ia64__
 #define ARCH "ia64"
 #define ARCHNUMBER 4
+#elif __x86_64__
+#define ARCH "x86_64"
+#define ARCHNUMBER 5
 #else
 #define ARCH "uknown"
 #define ARCHNUMBER 0
@@ -25,4 +28,5 @@ int main() {
 	detect_arch();
 	return 0;
 }
+
 */
