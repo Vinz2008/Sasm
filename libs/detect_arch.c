@@ -16,7 +16,7 @@
 #define ARCH "x86_64"
 #define ARCHNUMBER 5
 #else
-#define ARCH "uknown"
+#define ARCH "unknown"
 #define ARCHNUMBER 0
 #endif
 int detect_arch() {
