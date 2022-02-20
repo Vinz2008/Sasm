@@ -2,4 +2,7 @@
 *.asm
 *.bin
 *.out
-*.exe
+windows-installer/sasm_installer.exe
+sasm.exe
+build/
+sasm

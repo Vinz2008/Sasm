@@ -7,7 +7,7 @@ all:
 	$(CC) -c -g libs/startswith.c -o build/startswith.o
 	$(CC) -c -g libs/detect_arch.c -o build/detect_arch.o
 	$(CC) -c -g main.c -o build/main.o
-	$(CC) -o main.out build/main.o build/startswith.o build/detect_arch.o
+	$(CC) -o sasm build/main.o build/startswith.o build/detect_arch.o
 	rm -rf build
 
 old:
@@ -17,7 +17,7 @@ old:
 clean:
 	rm $(TARGET)
 run:
-	./main.out test.sasm
+	./sasm test.sasm
 test:
 	$(CC) -c -g libs/startswith.c -o libs/startswith.o
 	$(CC) -c -g tests/test.c -o tests/test.o
@@ -28,5 +28,9 @@ windows:
 	$(CC) -c -g libs/startswith.c -o build/startswith.o
 	$(CC) -c -g libs/detect_arch.c -o build/detect_arch.o
 	$(CC) -c -g main.c -o build/main.o
-	$(CC) -o main.exe build/main.o build/startswith.o build/detect_arch.o
-	rm .\build\ -r -f
+	$(CC) -o sasm.exe build/main.o build/startswith.o build/detect_arch.o
+	rmdir .\build\ /s /q
+
+
+install:
+	cp sasm /usr/bin/sasm
