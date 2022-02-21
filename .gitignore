@@ -6,3 +6,4 @@ windows-installer/sasm_installer.exe
 sasm.exe
 build/
 sasm
+Macos/sasm.app
