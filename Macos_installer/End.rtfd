@@ -1,0 +1,1 @@
+Add the directory to your path by adding "export PATH=$PATH:/Applications/sasm" to your .bashrc or .zshrc file.
