@@ -19,6 +19,8 @@ jobs:
       run: make
     - name: make run
       run: make run
+    - name: cat code.asm
+      run: cat code.asm
     - name: make test compiling
       run: make test
     - name: make test runnning
