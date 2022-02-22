@@ -2,3 +2,10 @@
 *.asm
 *.bin
 *.out
+windows-installer/sasm_installer.exe
+sasm.exe
+build/
+sasm
+Macos_installer/build/Sasm.pkg
+Sasm.pkg
+.DS_Store
