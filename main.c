@@ -337,13 +337,13 @@ int compile(char filetocompile[20]) {
         {
         if(line2[i] == '"')
         {
-        posLastQuote = i;
+        posLastQuote = i + 1;
         printf ("posLastQuote: %i\n", posLastQuote);
         break;
         }
         }
         int w = 0;
-        printf("lineList[sizeLineList] : %s", lineList[sizeLineList]);
+        //printf("lineList[sizeLineList] : %s", lineList[sizeLineList]);
 	for (i = posFirstQuote; i <= posLastQuote + 1; i++) 
 	{
 	lineList[sizeLineList][w] = line[i]; 
@@ -386,18 +386,21 @@ int compile(char filetocompile[20]) {
 	{
 	fprintf(fptr2, "%s ", lineList[0]);
 	fprintf(fptr2, "DW ");
-        printf("lineList[2] %s\n ", lineList[sizeLineList]);
+        printf("lineList[2] %s\n ", lineList[2]);
 	fprintf(fptr2, "%s ", lineList[sizeLineList]);
 	}
 	// FOURCHAR
         if (startswith("twoChar", lineList[1]))
 	{
 	fprintf(fptr2, "%s ", lineList[0]);
+	printf("lineList[0] %s\n", lineList[0]);
 	fprintf(fptr2, "DD ");
 	printf("lineList[2] %s\n ", lineList[sizeLineList]);
 	fprintf(fptr2, "%s ", lineList[sizeLineList]);
 	}
 	fprintf(fptr2, "\n");
+	printf("backslash n\n");
+	memset(lineList,0,sizeof(lineList));
         }
         printf("%s\n", line);
     }
