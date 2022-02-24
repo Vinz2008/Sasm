@@ -479,15 +479,17 @@ int main(int argc, char* argv[]){
     {
     printf ("pch2 : %s\n",pch2);
     }*/
-    int llvmArg = 0;
+    char archArg[10];
     char inputFilename[10];
     for (i=0;i<argc;i++) 
     {
     printf("argv[i] : %s\n", argv[i]);
-    if(strcmp(argv[i], "--llvm") == 0 || strcmp(argv[i], "-llvm") == 0)
+    if(strcmp(argv[i], "--arch") == 0)
     {
-    printf("llvm found\n");
-    llvmArg = 1;
+    printf("arch found\n");
+    strcpy(archArg, argv[i+1]);
+    printf("archArg : %s\n", archArg);
+    i++;
     }
     else {
     strcpy(inputFilename,argv[i]);

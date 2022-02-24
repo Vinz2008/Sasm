@@ -28,5 +28,4 @@ int main() {
 	detect_arch();
 	return 0;
 }
-
 */
