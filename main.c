@@ -314,7 +314,7 @@ int compile(char filetocompile[20]) {
 	int posFirstQuote;
 	int sizeLineList = 0;
         char lineList[10][10];
-	char * pch = strtok (line," ");
+	char *pch = strtok(line," ");
 	while (pch != NULL)
 	{
 	sizeLineList++;
@@ -474,15 +474,29 @@ int main(int argc, char* argv[]){
     {
         printf("The compiler can't compile that file\n");
     }*/
-    if (argv[1] != NULL){
-    compile(argv[1]);
-    }
-    /*
-    if (argv[1] == "compile")
+    /*char *pch2 = strtok(line," ");
+    while (pch2 != NULL)
     {
-    compile();
+    printf ("pch2 : %s\n",pch2);
+    }*/
+    int llvmArg = 0;
+    char inputFilename[10];
+    for (i=0;i<argc;i++) 
+    {
+    printf("argv[i] : %s\n", argv[i]);
+    if(strcmp(argv[i], "--llvm") == 0 || strcmp(argv[i], "-llvm") == 0)
+    {
+    printf("llvm found\n");
+    llvmArg = 1;
     }
-    */
+    else {
+    strcpy(inputFilename,argv[i]);
+    }
+    }
+    if (argv[1] != NULL){
+    //compile(argv[1]);
+    compile(inputFilename);
+    }
     }
     return 0;
 }
