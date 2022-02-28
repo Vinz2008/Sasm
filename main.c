@@ -382,7 +382,7 @@ int compile(char filetocompile[20]) {
 	fprintf(fptr2, "%s ", lineList[sizeLineList]);
 	}
 	// TWOCHAR
-	if (startswith("twoChar", lineList[1])) 
+	else if (startswith("twoChar", lineList[1])) 
 	{
 	fprintf(fptr2, "%s ", lineList[0]);
 	fprintf(fptr2, "DW ");
@@ -390,7 +390,7 @@ int compile(char filetocompile[20]) {
 	fprintf(fptr2, "%s ", lineList[sizeLineList]);
 	}
 	// FOURCHAR
-        if (startswith("twoChar", lineList[1]))
+        else if (startswith("fourChar", lineList[1]))
 	{
 	fprintf(fptr2, "%s ", lineList[0]);
 	printf("lineList[0] %s\n", lineList[0]);
