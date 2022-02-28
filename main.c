@@ -91,8 +91,6 @@ int compile(char filetocompile[20]) {
         tempWrite = line[i];
 	fprintf(fptr2, "%c", tempWrite);
         }
-	fprintf(fptr2, "\n");
- 
         } 
         //CMP
 	else if (startswith("compare", line) || startswith("\tcompare", line)) 
@@ -140,8 +138,6 @@ int compile(char filetocompile[20]) {
         tempWrite = line[i];
 	fprintf(fptr2, "%c", tempWrite);
         }
-	fprintf(fptr2, "\n");
- 
         } 
         //ADD
         else if (startswith("add", line) || startswith("\tadd", line)) 
@@ -189,8 +185,6 @@ int compile(char filetocompile[20]) {
         tempWrite = line[i];
 	fprintf(fptr2, "%c", tempWrite);
         }
-	fprintf(fptr2, "\n");
- 
         } 
         //AND
         else if (startswith("and", line) || startswith("\tand", line)) 
@@ -238,7 +232,6 @@ int compile(char filetocompile[20]) {
         tempWrite = line[i];
 	fprintf(fptr2, "%c", tempWrite);
         }
-	fprintf(fptr2, "\n");
         } 
         //CALL
         else if (startswith("launch", line) || startswith("\tlaunch", line)) {
@@ -262,7 +255,6 @@ int compile(char filetocompile[20]) {
         fprintf(fptr2, "%c", line[pos]);
         }
         printf("i: %i\n", i);
-	fprintf(fptr2, "\n");
         }
         // comments
         else if (startswith("#", line)) 
@@ -272,7 +264,6 @@ int compile(char filetocompile[20]) {
         {
         fprintf(fptr2, "%c", line[i]);
         }
-        fprintf(fptr2, "\n");
         }
 	//INTERRUPT
         else if (startswith("interrupt", line) || startswith("\tinterrupt", line)) {
@@ -288,7 +279,6 @@ int compile(char filetocompile[20]) {
         printf("line[pos] : %c\n", line[pos]);
         fprintf(fptr2, "%c", line[pos]);
         }
-	fprintf(fptr2, "\n");
         }
 
 	//ASEMBLY CODE USAGE
@@ -301,7 +291,6 @@ int compile(char filetocompile[20]) {
 	printf("line[pos] : %c\n", line[pos]);
         fprintf(fptr2, "%c", line[pos]);
 	}
-	fprintf(fptr2, "\n");
 	}
 	else
         {
@@ -398,12 +387,13 @@ int compile(char filetocompile[20]) {
 	printf("lineList[2] %s\n ", lineList[sizeLineList]);
 	fprintf(fptr2, "%s ", lineList[sizeLineList]);
 	}
-	fprintf(fptr2, "\n");
+	//fprintf(fptr2, "\n");
 	printf("backslash n\n");
 	memset(lineList,0,sizeof(lineList));
         }
         printf("%s\n", line);
     }
+    fprintf(fptr2, "\n");
     fprintf(fptr2, "\tret\n");
     fclose(fptr);
     fclose(fptr2);
