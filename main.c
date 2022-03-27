@@ -3,6 +3,12 @@
 #include <string.h>
 #include "libs/startswith.h"
 
+#ifdef _WIN32
+#define ARGUMENT_START 1
+#else
+#define ARGUMENT_START 0
+#endif
+
 int compile(char filetocompile[20]) {
     FILE *fptr;
     FILE *fptr2;
@@ -471,9 +477,9 @@ int main(int argc, char* argv[]){
     }*/
     char archArg[10];
     char inputFilename[10];
-    for (i=0;i<argc;i++) 
+    for (i=ARGUMENT_START;i<argc;i++) 
     {
-    printf("argv[i] : %s\n", argv[i]);
+    printf("argv[%i] : %s\n",i, argv[i]);
     if(strcmp(argv[i], "--arch") == 0)
     {
     printf("arch found\n");
