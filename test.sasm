@@ -5,8 +5,9 @@ data section
 text section
 start
 	move edx <= 20
-	compare 20 <= edx
-	asm ja loc
+	move ecx <= 20
+	compare ecx <= edx
+	asm cpuid
 	add eax <= ebx
 	and eax <= 0x7575
 	launch start
