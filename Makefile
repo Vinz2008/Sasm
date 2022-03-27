@@ -1,13 +1,14 @@
 CC=gcc
-TARGET=main.out
+TARGET=sasm
 FLAGS=-Wstring-compare -Wformat
 
 all:
 	mkdir build
 	$(CC) -c -g libs/startswith.c -o build/startswith.o
 	$(CC) -c -g libs/detect_arch.c -o build/detect_arch.o
+	$(CC) -c -g libs/detect_file_extension.c -o build/detect_file_extension.o
 	$(CC) -c -g main.c -o build/main.o
-	$(CC) -o sasm build/main.o build/startswith.o build/detect_arch.o
+	$(CC) -o sasm build/main.o build/startswith.o build/detect_arch.o build/detect_file_extension.o
 	rm -rf build
 
 old:
@@ -15,7 +16,8 @@ old:
 
 
 clean:
-	rm $(TARGET)
+	rm -f $(TARGET)
+	rm -rf build
 run:
 	./sasm test.sasm
 test:

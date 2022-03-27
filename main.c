@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "libs/startswith.h"
+#include "libs/detect_arch.h"
+#include "libs/detect_file_extension.h"
 
 #ifdef _WIN32
 #define ARGUMENT_START 1
