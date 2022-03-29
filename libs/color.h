@@ -73,7 +73,3 @@
 #define CRESET "\e[0m"
 #define COLOR_RESET "\e[0m"
 
-
-
-extern int colorprint(char* color,char* string);
-
