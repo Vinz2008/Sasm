@@ -4,6 +4,7 @@
 #include "libs/startswith.h"
 #include "libs/detect_arch.h"
 #include "libs/detect_file_extension.h"
+#include "libs/color.h"
 
 #ifdef _WIN32
 #define ARGUMENT_START 1
@@ -272,6 +273,7 @@ int compile(char filetocompile[20]) {
         {
         fprintf(fptr2, "%c", line[i]);
         }
+	fprintf(fptr2, "\n");
         }
 	//INTERRUPT
         else if (startswith("interrupt", line) || startswith("\tinterrupt", line)) {
@@ -289,6 +291,12 @@ int compile(char filetocompile[20]) {
         }
         }
 
+	//RETURN
+	else if (startswith("return", line) || startswith("\treturn", line)){
+	printf("return\n");
+	fprintf(fptr2,"\tret");
+	fprintf(fptr2, "\n");
+	}
 	//ASEMBLY CODE USAGE
 	else if(startswith("asm",line) || startswith("\tasm",line)){
 	printf("asm\n");
@@ -312,6 +320,7 @@ int compile(char filetocompile[20]) {
 	int sizeLineList = 0;
         char lineList[10][10];
 	char *pch = strtok(line," ");
+	memset(lineList,0,sizeof(lineList));
 	while (pch != NULL)
 	{
 	sizeLineList++;
@@ -341,9 +350,9 @@ int compile(char filetocompile[20]) {
         }
         int w = 0;
         //printf("lineList[sizeLineList] : %s", lineList[sizeLineList]);
-	for (i = posFirstQuote; i <= posLastQuote + 1; i++) 
+	for (i = posFirstQuote; i < posLastQuote; i++) 
 	{
-	lineList[sizeLineList][w] = line[i]; 
+	lineList[sizeLineList][w] = line2[i]; 
         printf("lineList[sizeLineList] %s\n", lineList[sizeLineList]);
         w++;
 	}
@@ -395,14 +404,14 @@ int compile(char filetocompile[20]) {
 	printf("lineList[2] %s\n ", lineList[sizeLineList]);
 	fprintf(fptr2, "%s ", lineList[sizeLineList]);
 	}
-	//fprintf(fptr2, "\n");
+	fprintf(fptr2, "\n");
 	printf("backslash n\n");
 	memset(lineList,0,sizeof(lineList));
         }
         printf("%s\n", line);
     }
     fprintf(fptr2, "\n");
-    fprintf(fptr2, "\tret\n");
+    //fprintf(fptr2, "\tret\n");
     fclose(fptr);
     fclose(fptr2);
     return 0;
