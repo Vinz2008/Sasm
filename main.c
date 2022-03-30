@@ -6,11 +6,13 @@
 #include "libs/detect_file_extension.h"
 #include "libs/color.h"
 
-#ifdef _WIN32
+/*#ifdef _WIN32
 #define ARGUMENT_START 1
 #else
 #define ARGUMENT_START 0
 #endif
+*/
+#define ARGUMENT_START 1
 
 int compile(char filetocompile[20]) {
     FILE *fptr;
@@ -20,7 +22,7 @@ int compile(char filetocompile[20]) {
     fptr = fopen(filetocompile, "r");
     if (fptr == NULL)
     {
-        printf("Error! The file is empty\n");   
+        printf(BRED "Error! The file is empty\n" reset);   
         exit(1);
     }
     /*fgets(line, "%s", fptr);
@@ -424,13 +426,15 @@ int main(int argc, char* argv[]){
     printf("%s\n", argv[1]);
     if(argc==1)
     {
-    printf("No Extra Command Line Argument Passed OtherThan Program Name");
+    printf(BRED "No Extra Command Line Argument Passed Other Than Program Name\n" reset);
+    printf(GRN "Do --help to know how to use this cli application\n" reset);
     exit(0);
     }
     else
     {
     int similarity_compile;
     char argument[100];
+    int filenameFound = 0;
     strcpy(argument, argv[1]);
     char archArg[10];
     char inputFilename[10];
@@ -444,9 +448,18 @@ int main(int argc, char* argv[]){
     printf("archArg : %s\n", archArg);
     i++;
     }
+    else if(strcmp(argv[i], "--help") == 0){
+    printf(BLU "USAGE : work in progress, it will be done later\n" reset);
+    }
     else {
     strcpy(inputFilename,argv[i]);
+    filenameFound = 1;
+    printf("filename found");
     }
+    }
+    if (filenameFound == 0){
+	printf(BRED "No filename was specified\n" reset);
+	exit(0);
     }
     if (argv[1] != NULL){
     //compile(argv[1]);
