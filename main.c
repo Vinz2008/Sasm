@@ -5,6 +5,7 @@
 #include "libs/detect_arch.h"
 #include "libs/detect_file_extension.h"
 #include "libs/color.h"
+#include "libs/usage.h"
 
 /*#ifdef _WIN32
 #define ARGUMENT_START 1
@@ -450,7 +451,9 @@ int main(int argc, char* argv[]){
     i++;
     }
     else if(strcmp(argv[i], "--help") == 0){
-    printf(BLU "USAGE : work in progress, it will be done later\n" reset);
+    //printf(BLU "USAGE : work in progress, it will be done later\n" reset);
+    usage();
+    exit(0);
     }
     else {
     strcpy(inputFilename,argv[i]);
