@@ -423,7 +423,6 @@ int compile(char filetocompile[20]) {
 int main(int argc, char* argv[]){
     int i;
     int a;
-    printf("%s\n", argv[1]);
     if(argc==1)
     {
     printf(BRED "No Extra Command Line Argument Passed Other Than Program Name\n" reset);
@@ -432,6 +431,8 @@ int main(int argc, char* argv[]){
     }
     else
     {
+    printf("%s\n", argv[1]);
+    printf("%c\n", argc);
     int similarity_compile;
     char argument[100];
     int filenameFound = 0;
@@ -454,7 +455,7 @@ int main(int argc, char* argv[]){
     else {
     strcpy(inputFilename,argv[i]);
     filenameFound = 1;
-    printf("filename found");
+    printf("filename found\n");
     }
     }
     if (filenameFound == 0){
