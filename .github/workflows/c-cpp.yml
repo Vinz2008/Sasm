@@ -24,4 +24,4 @@ jobs:
     - name: make test compiling
       run: make test
     - name: make test runnning
-      run: ./test.out
+      run: ./sasm-tests
