@@ -9,3 +9,4 @@ sasm
 Macos_installer/build/Sasm.pkg
 Sasm.pkg
 .DS_Store
+sasm-tests

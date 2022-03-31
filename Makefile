@@ -21,9 +21,12 @@ clean:
 run:
 	./sasm test.sasm
 test:
-	$(CC) -c -g libs/startswith.c -o libs/startswith.o
-	$(CC) -c -g tests/test.c -o tests/test.o
-	$(CC) -o test.out tests/test.o libs/startswith.o
+	mkdir build
+	$(CC) -c -g libs/startswith.c -o build/startswith.o
+	$(CC) -c -g libs/detect_arch.c -o build/detect_arch.o
+	$(CC) -c -g tests/test.c -o build/test.o
+	$(CC) -o sasm-tests build/test.o build/startswith.o build/detect_arch.o
+	rm -rf build
 
 windows:
 	mkdir build
