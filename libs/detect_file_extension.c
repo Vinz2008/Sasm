@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "detect_file_extension.h"
 char* detect_file_extension(char filename[30]) {
 	int i;
