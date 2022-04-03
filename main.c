@@ -29,6 +29,7 @@ int compile(char filetocompile[30], int IsDebugMode) {
     /*fgets(line, "%s", fptr);
     printf("%s", line);*/
     int i;
+    int i2;
     int posStartTo;
     int loopEndTo;
     int loopStartFrom;
@@ -51,10 +52,21 @@ int compile(char filetocompile[30], int IsDebugMode) {
         fprintf(fptr2, "section .data\n");
         /*printf("written section .data\n");*/
         }
-        else if (startswith("start", line) == 1)
+        else if (startswith("start:", line) == 1)
         {
 	fprintf(fptr2, "\tglobal _start\n_start:\n");
         /*printf("written global _start\n");*/
+        }
+        else if(line[strlen(line) - 1] == ':' || line[strlen(line) - 2] == ':'){
+                char functionName[10];
+                memset(functionName, 0, sizeof(functionName));
+                for (i = 0; i < strlen(line) - 1; i++){
+                        functionName[i] = line[i];
+                }
+                if (IsDebugMode == 1) {
+                        printf("function %s detected\n", functionName);
+                }
+                fprintf(fptr2, "%s", line);
         }
         else if (startswith("text section", line) == 1)
         {
@@ -534,6 +546,12 @@ int main(int argc, char* argv[]){
     if (filenameFound == 0){
 	printf(BRED "No filename was specified\n" reset);
 	exit(0);
+    }
+    if (FileExtensionCmp(inputFilename,"sasm") == 0) {
+            printf(BRED "filename %s is not a sasm file.\n", inputFilename);
+            printf(reset);
+            printf("if you want to force the execution of this file, use the -f flag\n");
+            exit(0);
     }
     if (argv[1] != NULL){
     //compile(argv[1]);

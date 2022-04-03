@@ -1,1 +1,1 @@
-char* detect_file_extension(char filename[30]);
+int FileExtensionCmp(char* filename, char* extension);

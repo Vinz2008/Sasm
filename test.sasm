@@ -3,7 +3,7 @@ data section
 	hello2 twoChar "he llo"
 	hello3 fourChar "1234"
 text section
-start
+start:
 	move edx <= 20
 	move ecx <= 20
 	compare ecx <= edx
@@ -14,3 +14,8 @@ start
 	interrupt 0x80	
 	return
 # comment
+
+
+test:
+	move edx <= 20
+	move ecx <= 20

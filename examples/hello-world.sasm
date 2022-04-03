@@ -1,0 +1,19 @@
+data section
+# message string
+    msg char "Hello world"
+# length message
+	asm len equ $ - msg
+
+text section
+
+# start function
+start:
+	move edx <= len
+	move ecx <= msg
+# file descriptor
+	move ebx <= 1
+# system call number sys_write
+	move eax <= 4
+	interrupt 0x80
+	move eax <= 1
+	interrupt 0x80

@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "detect_file_extension.h"
-char* detect_file_extension(char filename[30]) {
+int FileExtensionCmp(char* filename, char* extension) {
 	int i;
 	int i2;
 	int pointPos;
-	char* extension;
+	char* filenameExtension;
 	char temp[10];
 	for (i=0;i<strlen(filename);i++){
 	if (filename[i] == '.'){
@@ -15,20 +15,27 @@ char* detect_file_extension(char filename[30]) {
 	}
 	//printf("pointPos : %i\n", pointPos);
 	memset(temp,0,sizeof(temp));
-	extension = "\0";
+	filenameExtension = "\0";
 	i2 = 0;
-	for (i=pointPos;i<strlen(filename); i++){
+	for (i=pointPos + 1;i<strlen(filename); i++){
 	temp[i2] = filename[i];
 	//printf("extension in loop : %c\n", filename[i]);
 	i2++;
 	}
-	extension = temp;
-	//printf("extension : %s\n", extension);
-	return extension;
+	memcpy(filenameExtension, temp, strlen(filenameExtension));
+	filenameExtension = temp;
+	//printf("filenameExtension : %s\n", filenameExtension);
+	//printf("%i\n", strcmp(extension, filenameExtension));
+	if (strcmp(extension, filenameExtension) == 0) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
 }
-/*
-int main(){
-	const char* test = detect_file_extension("hello.docx");
-	printf("%s\n", test);
-}
-*/
+
+/*int main(){
+	int test = FileExtensionCmp("hello.txt", "txt");
+	printf("%i\n", test);  
+}*/
+
