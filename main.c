@@ -15,7 +15,7 @@
 */
 #define ARGUMENT_START 1
 
-int compile(char filetocompile[30], int IsDebugMode) {
+int compile(char filetocompile[30], char outputFile[15], int IsDebugMode) {
     FILE *fptr;
     FILE *fptr2;
     FILE *fptrtemp;
@@ -33,9 +33,9 @@ int compile(char filetocompile[30], int IsDebugMode) {
     int posStartTo;
     int loopEndTo;
     int loopStartFrom;
-    fptrtemp = fopen("code.asm", "w");
+    fptrtemp = fopen(outputFile, "w");
     fclose(fptrtemp);
-    fptr2 = fopen("code.asm", "a");
+    fptr2 = fopen(outputFile, "a");
     while (fgets(line,40, fptr)) {
         i++;
         int similarity_data_section = 0;
@@ -520,26 +520,36 @@ int main(int argc, char* argv[]){
     char inputFilename[30];
     int IsDebugMode = 0;
     int IsForced = 0;
+    char outputFile[15] = "code.asm";
     for (i=ARGUMENT_START;i<argc;i++) 
     {
     //printf("argv[%i] : %s\n",i, argv[i]);
-    if(strcmp(argv[i], "--arch") == 0)
+    if(strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0){
+    //printf(BLU "USAGE : work in progress, it will be done later\n" reset);
+    usage();
+    exit(0);
+    }
+    /*else if(strcmp(argv[i], "--arch") == 0)
     {
     printf("arch found\n");
     strcpy(archArg, argv[i+1]);
     printf("archArg : %s\n", archArg);
     i++;
-    }
-    else if(strcmp(argv[i], "--help") == 0){
-    //printf(BLU "USAGE : work in progress, it will be done later\n" reset);
-    usage();
-    exit(0);
-    }
-    else if (strcmp(argv[i], "-d") == 0) {
+    }*/
+    else if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--debug") == 0) {
             IsDebugMode = 1;
     }
-    else if (strcmp(argv[i], "-f") == 0) {
+    else if (strcmp(argv[i], "-f") == 0 || strcmp(argv[i], "--force") == 0) {
             IsForced = 1;
+    }
+    else if (strcmp(argv[i], "-o") == 0 || strcmp(argv[i], "--output") == 0){
+    i++;
+    strcpy(outputFile, argv[i]);
+    }
+    else if(startswith("-", argv[i])){
+    printf(BRED "ERROR : Invalid option\n" reset);
+    printf(BLU "try -h for the list of the options\n" reset);
+    exit(0);
     }
     else {
     strcpy(inputFilename,argv[i]);
@@ -559,7 +569,7 @@ int main(int argc, char* argv[]){
     }
     if (argv[1] != NULL){
     //compile(argv[1]);
-    compile(inputFilename, IsDebugMode);
+    compile(inputFilename, outputFile, IsDebugMode);
     }
     }
     return 0;
