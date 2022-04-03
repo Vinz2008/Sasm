@@ -15,7 +15,7 @@
 */
 #define ARGUMENT_START 1
 
-int compile(char filetocompile[30]) {
+int compile(char filetocompile[30], int IsDebugMode) {
     FILE *fptr;
     FILE *fptr2;
     FILE *fptrtemp;
@@ -70,7 +70,9 @@ int compile(char filetocompile[30]) {
         char movTo[10];
         for (pos = 6; pos < strlen(line); pos++)
         {
+        if (IsDebugMode == 1) {
         printf("line[pos] : %c\n", line[pos]);
+        }
         if (line[pos] == "<"[0]) 
         {
         if (line[pos + 1] == "="[0]) 
@@ -95,7 +97,9 @@ int compile(char filetocompile[30]) {
         for (i = 6; i <= loopEndTo; i++) {
         tempWrite = line[i];
 	fprintf(fptr2, "%c", tempWrite);
+        if (IsDebugMode == 1) {
         printf("i: %i\n", i);
+        }
         }
 	fprintf(fptr2, ",");
         for (i = loopStartFrom; i< strlen(line); i++) 
@@ -114,14 +118,20 @@ int compile(char filetocompile[30]) {
         char movTo[10];
         for (pos = 9; pos < strlen(line); pos++)
         {
+        if (IsDebugMode == 1) {
         printf("line[pos] : %c\n", line[pos]);
+        }
         if (line[pos] == "<"[0]) 
         {
+        if (IsDebugMode == 1) {
         printf("< detected\n");
+        }
         if (line[pos + 1] == "="[0]) 
         {
+        if (IsDebugMode == 1) {
         printf("= detected\n");
         printf("<= detected\n");
+        }
         if (line[pos + 2] == " "[0]) 
         {
         loopStartFrom = pos + 3;
@@ -142,7 +152,9 @@ int compile(char filetocompile[30]) {
         for (i = 9; i <= loopEndTo; i++) {
         tempWrite = line[i];
 	fprintf(fptr2, "%c", tempWrite);
+        if (IsDebugMode == 1) {
         printf("i: %i\n", i);
+        }
         }
 	fprintf(fptr2, ",");
         for (i = loopStartFrom; i< strlen(line); i++) 
@@ -161,14 +173,20 @@ int compile(char filetocompile[30]) {
         char movTo[10];
         for (pos = 5; pos < strlen(line); pos++)
         {
+        if (IsDebugMode == 1) {
         printf("line[pos] : %c\n", line[pos]);
+        }
         if (line[pos] == "<"[0]) 
         {
+        if (IsDebugMode == 1) {
         printf("< detected\n");
+        }
         if (line[pos + 1] == "="[0]) 
         {
+        if (IsDebugMode == 1) {
         printf("= detected\n");
         printf("<= detected\n");
+        }
         if (line[pos + 2] == " "[0]) 
         {
         loopStartFrom = pos + 3;
@@ -189,7 +207,9 @@ int compile(char filetocompile[30]) {
         for (i = 5; i <= loopEndTo; i++) {
         tempWrite = line[i];
 	fprintf(fptr2, "%c", tempWrite);
+        if (IsDebugMode == 1) {
         printf("i: %i\n", i);
+        }
         }
 	fprintf(fptr2, ",");
         for (i = loopStartFrom; i< strlen(line); i++) 
@@ -208,14 +228,20 @@ int compile(char filetocompile[30]) {
         char movTo[10];
         for (pos = 5; pos < strlen(line); pos++)
         {
+        if (IsDebugMode == 1) {
         printf("line[pos] : %c\n", line[pos]);
+        }
         if (line[pos] == "<"[0]) 
         {
+        if (IsDebugMode == 1) {
         printf("< detected\n");
+        }
         if (line[pos + 1] == "="[0]) 
         {
+        if (IsDebugMode == 1) {
         printf("= detected\n");
         printf("<= detected\n");
+        }
         if (line[pos + 2] == " "[0]) 
         {
         loopStartFrom = pos + 3;
@@ -236,7 +262,9 @@ int compile(char filetocompile[30]) {
         for (i = 5; i <= loopEndTo; i++) {
         tempWrite = line[i];
 	fprintf(fptr2, "%c", tempWrite);
+        if (IsDebugMode == 1) {
         printf("i: %i\n", i);
+        }
         }
 	fprintf(fptr2, ",");
         for (i = loopStartFrom; i< strlen(line); i++) 
@@ -254,6 +282,7 @@ int compile(char filetocompile[30]) {
                 functionName[z] = line[i];
                 z++;
         }
+        
         if (startswith("start", functionName)) {
                 fprintf(fptr2, "_");
         }
@@ -263,10 +292,14 @@ int compile(char filetocompile[30]) {
         char movTo[10];
         for (pos = 8; pos < strlen(line); pos++)
         {
+        if (IsDebugMode == 1) {
         printf("line[pos] : %c\n", line[pos]);
+        }
         fprintf(fptr2, "%c", line[pos]);
         }
+        if (IsDebugMode == 1) {
         printf("i: %i\n", i);
+        }
         }
         // comments
         else if (startswith("#", line)) 
@@ -280,7 +313,9 @@ int compile(char filetocompile[30]) {
         }
 	//INTERRUPT
         else if (startswith("interrupt", line) || startswith("\tinterrupt", line)) {
+        if (IsDebugMode == 1) {
         printf("int\n");
+        }
         fprintf(fptr2, "\tint ");
         int z = 0;
         posStartTo = 0;
@@ -289,32 +324,42 @@ int compile(char filetocompile[30]) {
         char movTo[10];
         for (pos = 11; pos < strlen(line); pos++)
         {
+        if (IsDebugMode == 1) {
         printf("line[pos] : %c\n", line[pos]);
+        }
         fprintf(fptr2, "%c", line[pos]);
         }
         }
 
 	//RETURN
 	else if (startswith("return", line) || startswith("\treturn", line)){
+        if (IsDebugMode == 1) {
 	printf("return\n");
+        }
 	fprintf(fptr2,"\tret");
 	fprintf(fptr2, "\n");
 	}
 	//ASEMBLY CODE USAGE
 	else if(startswith("asm",line) || startswith("\tasm",line)){
+        if (IsDebugMode == 1) {
 	printf("asm\n");
+        }
 	fprintf(fptr2, "\t");
 	int pos;
 	for (pos = 5; pos < strlen(line); pos++) 
 	{
+        if (IsDebugMode == 1) {
 	printf("line[pos] : %c\n", line[pos]);
+        }
         fprintf(fptr2, "%c", line[pos]);
 	}
 	}
 	else
         {
+        if (IsDebugMode == 1) {
         printf("line: %s", line);
         printf("strlen(line) : %li\n", strlen(line));
+        }
         char line2[40];
         strcpy(line2, line);
         int c = 0;
@@ -327,8 +372,10 @@ int compile(char filetocompile[30]) {
 	while (pch != NULL)
 	{
 	sizeLineList++;
+        if (IsDebugMode == 1) {
     	printf ("pch : %s\n",pch);
         printf("startswith(pch) : %i\n",startswith("\"", pch));
+        }
 	if (startswith("\"", pch)) 
 	{
 	for (i = 0; i < strlen(line2); i++)
@@ -336,18 +383,23 @@ int compile(char filetocompile[30]) {
   	if(line2[i] == '"')  
 	{
 	posFirstQuote = i;
-
+        if (IsDebugMode == 1) {
         printf ("posFirstQuote: %i\n", posFirstQuote);
+        }
 	break;    	
  	}
 	}
+        if (IsDebugMode == 1) {
         printf("strlen(line2) : %li\n", strlen(line2));
+        }
 	for (i = posFirstQuote + 1; i < strlen(line2); i++)
         {
         if(line2[i] == '"')
         {
         posLastQuote = i + 1;
+        if (IsDebugMode == 1) {
         printf ("posLastQuote: %i\n", posLastQuote);
+        }
         break;
         }
         }
@@ -356,7 +408,9 @@ int compile(char filetocompile[30]) {
 	for (i = posFirstQuote; i < posLastQuote; i++) 
 	{
 	lineList[sizeLineList][w] = line2[i]; 
+        if (IsDebugMode == 1) {
         printf("lineList[sizeLineList] %s\n", lineList[sizeLineList]);
+        }
         w++;
 	}
         //lineList[sizeLineList][w] = "\0";
@@ -387,7 +441,9 @@ int compile(char filetocompile[30]) {
 	{
 	fprintf(fptr2, "%s ", lineList[0]);
 	fprintf(fptr2, "DB ");
+        if (IsDebugMode == 1) {
         printf("lineList[2] %s\n ", lineList[sizeLineList]);
+        }
 	fprintf(fptr2, "%s ", lineList[sizeLineList]);
 	}
 	// TWOCHAR
@@ -395,23 +451,33 @@ int compile(char filetocompile[30]) {
 	{
 	fprintf(fptr2, "%s ", lineList[0]);
 	fprintf(fptr2, "DW ");
+        if (IsDebugMode == 1) {
         printf("lineList[2] %s\n ", lineList[2]);
+        }
 	fprintf(fptr2, "%s ", lineList[sizeLineList]);
 	}
 	// FOURCHAR
         else if (startswith("fourChar", lineList[1]))
 	{
 	fprintf(fptr2, "%s ", lineList[0]);
+        if (IsDebugMode == 1) {
 	printf("lineList[0] %s\n", lineList[0]);
+        }
 	fprintf(fptr2, "DD ");
+        if (IsDebugMode == 1) {
 	printf("lineList[2] %s\n ", lineList[sizeLineList]);
+        }
 	fprintf(fptr2, "%s ", lineList[sizeLineList]);
 	}
 	fprintf(fptr2, "\n");
+        if (IsDebugMode == 1) {
 	printf("backslash n\n");
+        }
 	memset(lineList,0,sizeof(lineList));
         }
+        if (IsDebugMode == 1) {
         printf("%s\n", line);
+        }
     }
     fprintf(fptr2, "\n");
     //fprintf(fptr2, "\tret\n");
@@ -432,17 +498,18 @@ int main(int argc, char* argv[]){
     }
     else
     {
-    printf("%s\n", argv[1]);
-    printf("%c\n", argc);
+    //printf("%s\n", argv[1]);
+    //printf("%c\n", argc);
     int similarity_compile;
     char argument[100];
     int filenameFound = 0;
     strcpy(argument, argv[1]);
     char archArg[10];
     char inputFilename[30];
+    int IsDebugMode = 0;
     for (i=ARGUMENT_START;i<argc;i++) 
     {
-    printf("argv[%i] : %s\n",i, argv[i]);
+    //printf("argv[%i] : %s\n",i, argv[i]);
     if(strcmp(argv[i], "--arch") == 0)
     {
     printf("arch found\n");
@@ -455,10 +522,13 @@ int main(int argc, char* argv[]){
     usage();
     exit(0);
     }
+    else if (strcmp(argv[i], "-d") == 0) {
+            IsDebugMode = 1;
+    }
     else {
     strcpy(inputFilename,argv[i]);
     filenameFound = 1;
-    printf("filename found\n");
+    //printf("filename found\n");
     }
     }
     if (filenameFound == 0){
@@ -467,7 +537,7 @@ int main(int argc, char* argv[]){
     }
     if (argv[1] != NULL){
     //compile(argv[1]);
-    compile(inputFilename);
+    compile(inputFilename, IsDebugMode);
     }
     }
     return 0;
