@@ -40,3 +40,6 @@ windows:
 
 install:
 	cp sasm /usr/bin/sasm
+
+uninstall:
+	rm /usr/bin/sasm
