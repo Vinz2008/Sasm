@@ -504,7 +504,7 @@ int main(int argc, char* argv[]){
     int a;
     if(argc==1)
     {
-    printf(BRED "No Extra Command Line Argument Passed Other Than Program Name\n" reset);
+    printf(BRED "ERROR: No Extra Command Line Argument Passed Other Than Program Name\n" reset);
     printf(GRN "Do --help to know how to use this cli application\n" reset);
     exit(0);
     }
@@ -548,11 +548,11 @@ int main(int argc, char* argv[]){
     }
     }
     if (filenameFound == 0){
-	printf(BRED "No filename was specified\n" reset);
+	printf(BRED "ERROR: No filename was specified\n" reset);
 	exit(0);
     }
     if (FileExtensionCmp(inputFilename,"sasm") == 0 && IsForced == 0) {
-            printf(BRED "filename %s is not a sasm file.\n", inputFilename);
+            printf(BRED "ERROR: filename %s is not a sasm file.\n", inputFilename);
             printf(reset);
             printf("if you want to force the execution of this file, use the -f flag\n");
             exit(0);
