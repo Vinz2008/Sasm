@@ -15,7 +15,7 @@
 */
 #define ARGUMENT_START 1
 
-int compile(char filetocompile[20]) {
+int compile(char filetocompile[30]) {
     FILE *fptr;
     FILE *fptr2;
     FILE *fptrtemp;
@@ -35,7 +35,7 @@ int compile(char filetocompile[20]) {
     fptrtemp = fopen("code.asm", "w");
     fclose(fptrtemp);
     fptr2 = fopen("code.asm", "a");
-    while (fgets(line,150, fptr)) {
+    while (fgets(line,40, fptr)) {
         i++;
         int similarity_data_section = 0;
         for (i = 0; i < 12; i++)
@@ -439,7 +439,7 @@ int main(int argc, char* argv[]){
     int filenameFound = 0;
     strcpy(argument, argv[1]);
     char archArg[10];
-    char inputFilename[10];
+    char inputFilename[30];
     for (i=ARGUMENT_START;i<argc;i++) 
     {
     printf("argv[%i] : %s\n",i, argv[i]);
