@@ -519,6 +519,7 @@ int main(int argc, char* argv[]){
     char archArg[10];
     char inputFilename[30];
     int IsDebugMode = 0;
+    int IsForced = 0;
     for (i=ARGUMENT_START;i<argc;i++) 
     {
     //printf("argv[%i] : %s\n",i, argv[i]);
@@ -537,6 +538,9 @@ int main(int argc, char* argv[]){
     else if (strcmp(argv[i], "-d") == 0) {
             IsDebugMode = 1;
     }
+    else if (strcmp(argv[i], "-f") == 0) {
+            IsForced = 1;
+    }
     else {
     strcpy(inputFilename,argv[i]);
     filenameFound = 1;
@@ -547,7 +551,7 @@ int main(int argc, char* argv[]){
 	printf(BRED "No filename was specified\n" reset);
 	exit(0);
     }
-    if (FileExtensionCmp(inputFilename,"sasm") == 0) {
+    if (FileExtensionCmp(inputFilename,"sasm") == 0 && IsForced == 0) {
             printf(BRED "filename %s is not a sasm file.\n", inputFilename);
             printf(reset);
             printf("if you want to force the execution of this file, use the -f flag\n");
