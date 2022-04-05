@@ -3,7 +3,7 @@
 ## What is SASM
 
 SASM means Simple ASseMbly.
-Sasm is an assembly-like programming language. It is compiled to x86_64 intel assembly.  
+Sasm is an assembly-like programming language. It is compiled to i386 intel assembly.  
 It uses simpler and easier to remember instructions
 
 ### What is in this repo ?
