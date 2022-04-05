@@ -313,6 +313,22 @@ int compile(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         printf("i: %i\n", i);
         }
         }
+	// PUSH
+	else if (startswith("push", line)){
+	fprintf(fptr2,"%s",line);
+	}
+	// POP
+	else if (startswith("pop", line)){
+        fprintf(fptr2,"%s",line);
+        }
+	// C-FUNCTION / GLOBAL-FUNCTION
+	else if (startswith("c-function",line) || startswith("global-function", line)){
+	fprintf(fptr2, "extern ");
+	int FirstPosFunction = startswith("c-function",line) == 1 ? 11 : 15;
+	for (i = FirstPosFunction; i < strlen(line); i++){
+	fprintf(fptr2, "%c", line[i]);
+	}
+	}
         // comments
         else if (startswith("#", line)) 
         {

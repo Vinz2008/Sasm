@@ -1,0 +1,14 @@
+c-function printf
+data section
+	msg char "Hello world"
+	asm fmt DB "%s", 10, 0 
+text section
+start:
+	push ebp
+	move edi <= fmt
+	move esi <= msg
+	move eax <= 0
+	launch printf
+	pop ebp
+	move eax <= 0
+	return
