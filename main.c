@@ -358,7 +358,64 @@ int compile(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         fprintf(fptr2, "%c", line[pos]);
         }
         }
-
+	//DO-NOTHING
+	else if(startswith("do-nothing", line)||startswith("\tdo-nothing", line)){
+	fprintf(fptr2, "\tnop\n");
+	}
+	//MULTIPLY
+	else if(startswith("multiply", line)||startswith("\tmultiply", line)){
+	fprintf(fptr2, "\tmul");
+	posStartTo = 0;
+        int pos;
+        char movFrom[10];
+        char movTo[10];
+	/*for (pos = 10; pos < strlen(line); pos++)
+        {
+        if (IsDebugMode == 1) {
+        printf("line[pos] : %c\n", line[pos]);
+        }
+        if (line[pos] == '<')
+        {
+        if (IsDebugMode == 1) {
+        printf("< detected\n");
+        }
+        if (line[pos + 1] ==  '=')
+        {
+        if (IsDebugMode == 1) {
+        printf("= detected\n");
+        printf("<= detected\n");
+        }
+        if (line[pos + 2] == ' ')
+        {
+        loopStartFrom = pos + 3;
+        } else {
+        loopStartFrom = pos + 2;
+	}
+        if (line[pos - 1] == ' ')
+        {
+        loopEndTo = pos - 2;
+        } else {
+        loopEndTo = pos - 1;
+        }
+        }
+        }
+        }*/
+        int lengthMovTo;
+        char tempWrite;
+        for (i = 5; i <= strlen(line); i++) {
+        tempWrite = line[i];
+        fprintf(fptr2, "%c", tempWrite);
+        if (IsDebugMode == 1) {
+        printf("i: %i\n", i);
+        }
+        }
+        /*fprintf(fptr2, ",");
+	for (i = loopStartFrom; i< strlen(line); i++)
+        {
+        tempWrite = line[i];
+        fprintf(fptr2, "%c", tempWrite);
+        }*/
+	}
 	//RETURN
 	else if (startswith("return", line) || startswith("\treturn", line)){
         if (IsDebugMode == 1) {
