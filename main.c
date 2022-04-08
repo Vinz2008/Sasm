@@ -57,7 +57,7 @@ int compile(char filetocompile[30], char outputFile[15], int IsDebugMode) {
 	fprintf(fptr2, "\tglobal _start\n_start:\n");
         /*printf("written global _start\n");*/
         }
-        else if(line[strlen(line) - 1] == ':' || line[strlen(line) - 2] == ':'){
+        else if(line[strlen(line) - 2] == ':' && startswith("asm", line)==0 && startswith("\tasm",line)==0){
                 char functionName[10];
                 memset(functionName, 0, sizeof(functionName));
                 for (i = 0; i < strlen(line) - 1; i++){
@@ -314,11 +314,11 @@ int compile(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         }
         }
 	// PUSH
-	else if (startswith("push", line)){
+	else if (startswith("push", line)||startswith("\tpush", line)){
 	fprintf(fptr2,"%s",line);
 	}
 	// POP
-	else if (startswith("pop", line)){
+	else if (startswith("pop", line)||startswith("\tpop", line)){
         fprintf(fptr2,"%s",line);
         }
 	// C-FUNCTION / GLOBAL-FUNCTION
@@ -364,7 +364,7 @@ int compile(char filetocompile[30], char outputFile[15], int IsDebugMode) {
 	}
 	//MULTIPLY
 	else if(startswith("multiply", line)||startswith("\tmultiply", line)){
-	fprintf(fptr2, "\tmul");
+	fprintf(fptr2, "\tmul ");
 	posStartTo = 0;
         int pos;
         char movFrom[10];
@@ -402,7 +402,7 @@ int compile(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         }*/
         int lengthMovTo;
         char tempWrite;
-        for (i = 5; i <= strlen(line); i++) {
+        for (i = 10; i <= strlen(line); i++) {
         tempWrite = line[i];
         fprintf(fptr2, "%c", tempWrite);
         if (IsDebugMode == 1) {
@@ -501,6 +501,10 @@ int compile(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         //lineList[sizeLineList][w] = "\0";
 	break;
 	}
+        else if(startswith("1", pch)||startswith("2", pch)||startswith("3", pch)||startswith("4", pch)||startswith("5", pch)||startswith("6", pch)||startswith("7", pch)||startswith("8", pch)||startswith("9", pch)||startswith("10", pch)){
+                strcpy(lineList[sizeLineList], pch);
+                break; 
+        }
 	else 
 	{
 	strcpy(lineList[c], pch);

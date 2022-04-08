@@ -1,0 +1,58 @@
+# according to https://github.com/luc99a/Assembly-Codes/blob/master/fibonacci.asm
+text section
+
+start:
+	move eax <= 1
+	move ebx <= 1
+	move ecx <= 20
+	asm loop:
+	add ebx <= eax
+	push eax
+	push ebx
+	push ecx
+	launch printnum
+	pop ecx
+	pop eax
+	pop ebx
+	asm dec ecx
+	asm test ecx, ecx
+	asm jnz loop
+	move eax <= 1
+	move ebx <= 0
+	interrupt 0x80
+
+printnum:
+	asm xor edi, edi
+	asm divide:
+	asm xor edx, edx
+	move ecx <= 10
+	asm div ecx
+	push ebx
+	asm inc edi
+	asm test eax, eax
+	asm jnz divide
+	asm print:
+	pop eax
+	add eax <= '0'
+	move [toprint] <= eax
+	move ebx <= 1
+	move ecx <= toprint
+	move edx <= 1
+	move eax <= 4
+	interrupt 0x80
+	asm dec edi
+	asm test edi, edi
+	asm jnz print
+	move eax <= 4
+	move ebx <= 1
+	move ecx <= lf
+	move edx <= 1
+	interrupt 0x80
+	return
+
+
+
+data section
+	asm lf db 0Ah
+	asm section .bss
+	asm toprint: resb 1
