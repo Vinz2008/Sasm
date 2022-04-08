@@ -16,10 +16,10 @@ start:
 	launch start
 	interrupt 0x80	
 	do-nothing
-	return
 # comment
 
 
 test:
 	move edx <= 20
 	move ecx <= 20
+	return
