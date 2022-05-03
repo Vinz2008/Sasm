@@ -12,13 +12,10 @@ all:
 	$(CC) -o sasm build/main.o build/startswith.o build/detect_arch.o build/detect_file_extension.o build/usage.o
 	rm -rf build
 
-old:
-	$(CC) main.c -o $(TARGET) $(FLAGS)
 
 
 clean:
-	rm -f $(TARGET)
-	rm -rf build
+	rm -rf $(TARGET) build
 run:
 	./sasm test.sasm
 test:
