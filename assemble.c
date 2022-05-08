@@ -448,7 +448,7 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         int pos;
         for (pos = 5; pos < strlen(line); pos++){
             
-            if (line[pos] == 'a' && line[pos + 1] == 'n' && line[pos + 2] == 'd' ){
+            if (line[pos + 1] == 'a' && line[pos + 2] == 'n' && line[pos + 3] == 'd' ){
                 fprintf(fptr2, ",");
                 pos += 4;
                 break;
@@ -459,8 +459,14 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         for (pos = pos; pos < strlen(line); pos ++){
             fprintf(fptr2,"%c",line[pos]);
         }
-        fprintf(fptr2, "\n");
 
+    }
+    else if(startswith("jnz", line)){
+            fprintf(fptr2, "\tjnz ");
+            int pos;
+            for (pos = 4; pos < strlen(line); pos++){ 
+                fprintf(fptr2,"%c",line[pos]);
+            }
     }
     // VARIABLES
 	else
