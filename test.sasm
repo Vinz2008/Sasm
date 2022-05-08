@@ -15,12 +15,14 @@ start:
 	and eax <= 0x7575
 	launch start
 	launch test
-	interrupt 0x80	
+	interrupt 0x80
+	asm loc_40102B:
 	push edx
 	pop edx
 	do-nothing
 	test eax and eax
-	js error
+	jumpzeroflag short loc_40102B
+
 # comment
 
 

@@ -16,7 +16,7 @@ start:
 	pop ebx
 	asm dec ecx
 	test ecx, ecx
-	jnz loop
+	jumpzeroflag loop
 	move eax <= 1
 	move ebx <= 0
 	interrupt 0x80
@@ -30,7 +30,7 @@ printnum:
 	push ebx
 	asm inc edi
 	test eax, eax
-	jnz divide
+	jumpzeroflag divide
 	asm print:
 	pop eax
 	add eax <= '0'
@@ -42,7 +42,7 @@ printnum:
 	interrupt 0x80
 	asm dec edi
 	test edi, edi
-	jnz print
+	jumpzeroflag print
 	move eax <= 4
 	move ebx <= 1
 	move ecx <= lf

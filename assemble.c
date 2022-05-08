@@ -461,10 +461,10 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         }
 
     }
-    else if(startswith("jnz", line)){
+    else if(startswith("jumpzeroflag", line)){
             fprintf(fptr2, "\tjnz ");
             int pos;
-            for (pos = 4; pos < strlen(line); pos++){ 
+            for (pos = 11; pos < strlen(line); pos++){ 
                 fprintf(fptr2,"%c",line[pos]);
             }
     }
