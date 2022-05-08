@@ -9,7 +9,8 @@ all:
 	$(CC) -c -g libs/detect_file_extension.c -o build/detect_file_extension.o
 	$(CC) -c -g libs/usage.c -o build/usage.o
 	$(CC) -c -g main.c -o build/main.o
-	$(CC) -o sasm build/main.o build/startswith.o build/detect_arch.o build/detect_file_extension.o build/usage.o
+	$(CC) -c -g assemble.c -o build/assemble.o
+	$(CC) -o sasm build/main.o build/startswith.o build/detect_arch.o build/detect_file_extension.o build/usage.o build/assemble.o
 	rm -rf build
 
 

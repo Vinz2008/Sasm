@@ -1,0 +1,1 @@
+int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode);
