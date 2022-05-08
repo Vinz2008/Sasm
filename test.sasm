@@ -14,10 +14,13 @@ start:
 	add eax <= ebx
 	and eax <= 0x7575
 	launch start
+	launch test
 	interrupt 0x80	
 	push edx
 	pop edx
 	do-nothing
+	test eax and eax
+	js error
 # comment
 
 
@@ -25,3 +28,6 @@ test:
 	move edx <= 20
 	move ecx <= 20
 	return
+
+error:
+	move edx <= 20
