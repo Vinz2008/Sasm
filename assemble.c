@@ -70,7 +70,7 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         fprintf(fptr2, "section .text\n");
         }
         //MOV
-        else if (startswith("move", line) || startswith("\tmove", line)) 
+        else if (startswith("move", line)) 
         {
         fprintf(fptr2, "\tmov ");
         posStartTo = 0;
@@ -118,7 +118,7 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         }
         } 
         //CMP
-	else if (startswith("compare", line) || startswith("\tcompare", line)) 
+	else if (startswith("compare", line)) 
         {
         fprintf(fptr2, "\tcmp ");
         posStartTo = 0;
@@ -173,7 +173,7 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         }
         } 
         //ADD
-        else if (startswith("add", line) || startswith("\tadd", line)) 
+        else if (startswith("add", line)) 
         {
         fprintf(fptr2, "\tadd ");
         posStartTo = 0;
@@ -228,7 +228,7 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         }
         } 
         //AND
-        else if (startswith("and", line) || startswith("\tand", line)) 
+        else if (startswith("and", line)) 
         {
         fprintf(fptr2, "\tand ");
         posStartTo = 0;
@@ -283,7 +283,7 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         }
         } 
         //CALL
-        else if (startswith("launch", line) || startswith("\tlaunch", line)) {
+        else if (startswith("launch", line)) {
         fprintf(fptr2, "\tcall ");
         int z = 0;
         char functionName[20];
@@ -311,12 +311,12 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         }
         }
 	// PUSH
-	else if (startswith("push", line)||startswith("\tpush", line)){
+	else if (startswith("push", line)){
         fprintf(fptr2,"\t");
 	fprintf(fptr2,"%s",line);
 	}
 	// POP
-	else if (startswith("pop", line)||startswith("\tpop", line)){
+	else if (startswith("pop", line)){
         fprintf(fptr2,"\t");
         fprintf(fptr2,"%s",line);
         }
@@ -339,7 +339,7 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
 	fprintf(fptr2, "\n");
         }
 	//INTERRUPT
-        else if (startswith("interrupt", line) || startswith("\tinterrupt", line)) {
+        else if (startswith("interrupt", line)) {
         if (IsDebugMode == 1) {
         printf("int\n");
         }
@@ -358,11 +358,11 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         }
         }
 	//DO-NOTHING
-	else if(startswith("do-nothing", line)||startswith("\tdo-nothing", line)){
+	else if(startswith("do-nothing", line)){
 	fprintf(fptr2, "\tnop\n");
 	}
 	//MULTIPLY
-	else if(startswith("multiply", line)||startswith("\tmultiply", line)){
+	else if(startswith("multiply", line)){
 	fprintf(fptr2, "\tmul ");
 	posStartTo = 0;
         int pos;
@@ -416,7 +416,7 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         }*/
 	}
 	//RETURN
-	else if (startswith("return", line) || startswith("\treturn", line)){
+	else if (startswith("return", line)){
         if (IsDebugMode == 1) {
 	printf("return\n");
         }
@@ -424,7 +424,7 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
 	fprintf(fptr2, "\n");
 	}
 	//ASEMBLY CODE USAGE
-	else if(startswith("asm",line) || startswith("\tasm",line)){
+	else if(startswith("asm",line)){
         if (IsDebugMode == 1) {
 	    printf("asm\n");
         }
@@ -439,7 +439,7 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
 	}
 	}
     // TEST
-    else if(startswith("test", line)|| startswith("\ttest", line)){
+    else if(startswith("test", line)){
         if (IsDebugMode == 1) {
 	    printf("test\n");
         }
