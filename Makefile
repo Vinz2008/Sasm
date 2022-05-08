@@ -17,7 +17,7 @@ all:
 
 
 clean:
-	rm -rf $(TARGET) build
+	rm -rf $(TARGET) build sasm-tests code.asm examples/*.asm examples/*.o
 run:
 	./sasm test.sasm
 test:
