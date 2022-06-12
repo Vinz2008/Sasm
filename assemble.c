@@ -69,6 +69,9 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         {
         fprintf(fptr2, "section .text\n");
         }
+        else if(startswith("variable section", line)){
+        fprintf(fptr2, "section .bss\n");
+        }
         //MOV
         else if (startswith("move", line)) 
         {
