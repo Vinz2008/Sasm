@@ -12,9 +12,12 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: sharpninja/install-scoop-action@master
+      with:
+        allow-install-as-admin: true
+        extension: 'ps1'
     - name: Install NSIS
       run: |
-        Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
         scoop bucket add extras
         scoop install nsis
     - name: Print NSIS version
