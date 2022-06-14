@@ -32,7 +32,7 @@ jobs:
         echo root directory
         ls
         echo windows_installer directory
-        ls
+        ls .\windows_installer\
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
