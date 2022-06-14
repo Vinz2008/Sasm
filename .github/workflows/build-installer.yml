@@ -43,6 +43,7 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         automatic_release_tag: "latest"
         prerelease: false
-        files: .\windows-installer\sasm_installer.exe
+        files: |
+          .\windows-installer\sasm_installer.exe
             
       
