@@ -48,5 +48,6 @@ jobs:
       with:
         tag_name: auto_release
         token: ${{ secrets.GITHUB_TOKEN }}
+        files: .\windows-installer\sasm_installer.exe
 
       
