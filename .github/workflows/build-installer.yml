@@ -18,5 +18,7 @@ jobs:
         .\install.ps1 -RunAsAdmin
         scoop bucket add extras
         scoop install nsis
-    - name: compile NSIS script
-      run: makensis .\windows-installer\installer.nsi
+    - name: generate installer with NSIS script
+      run: |
+        cd .\windows-installer\
+        makensis installer.nsi
