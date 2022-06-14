@@ -3,8 +3,6 @@ name: Build Installer
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -28,3 +26,9 @@ jobs:
     - name: generate installer with NSIS script
       run: |
         makensis .\windows-installer\installer.nsi
+    - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: installer.exe
+          path: .\windows-installer\sasm_installer.exe
+      
