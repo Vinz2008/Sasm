@@ -12,7 +12,6 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Install Scoop
     - name: Install NSIS
       run: |
         irm get.scoop.sh -outfile 'install.ps1'
