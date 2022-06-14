@@ -27,6 +27,12 @@ jobs:
     - name: generate installer with NSIS script
       run: |
         makensis .\windows-installer\installer.nsi
+    - name: list files
+      run: |
+        echo root directory
+        ls
+        echo windows_installer directory
+        ls
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
