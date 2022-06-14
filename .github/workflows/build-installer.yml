@@ -23,7 +23,7 @@ jobs:
         platform: x64
     - name : build the app
       run: |
-        make windows
+        make
     - name: generate installer with NSIS script
       run: |
         makensis .\windows-installer\installer.nsi
@@ -47,6 +47,8 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         tag_name: auto_release
+        name: Automatic Release
+        body: Automatic release with github actions
         token: ${{ secrets.GITHUB_TOKEN }}
         files: .\windows-installer\sasm_installer.exe
 
