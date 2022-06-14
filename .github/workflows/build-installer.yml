@@ -38,13 +38,17 @@ jobs:
       with:
         name: installer.exe
         path: .\windows-installer\sasm_installer.exe
-    - uses: marvinpinto/action-automatic-releases@latest
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        automatic_release_tag: "latest"
+        tag_name: latest
+        release_name: ${{ github.ref }}
+        body: |
+          New Automatic release
+        draft: false
         prerelease: false
-        title: "Automatic Build"
-        files: |
-          D:\a\Sasm\Sasm\windows-installer\sasm_installer.exe
             
       
