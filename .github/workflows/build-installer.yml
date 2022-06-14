@@ -18,7 +18,13 @@ jobs:
         .\install.ps1 -RunAsAdmin
         scoop bucket add extras
         scoop install nsis
+    - name: Set up MinGW
+      uses: egor-tensin/setup-mingw@v2
+      with:
+        platform: x64
+    - name : build the app
+      run: |
+        make
     - name: generate installer with NSIS script
       run: |
-        cd .\windows-installer\
-        makensis installer.nsi
+        makensis .\windows-installer\installer.nsi
