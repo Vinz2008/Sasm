@@ -12,12 +12,11 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: sharpninja/install-scoop-action@master
-      with:
-        allow-install-as-admin: true
-        extension: 'ps1'
+    - name: Install Scoop
     - name: Install NSIS
       run: |
+        irm get.scoop.sh -outfile 'install.ps1'
+        .\install.ps1 -RunAsAdmin
         scoop bucket add extras
         scoop install nsis
     - name: Print NSIS version
