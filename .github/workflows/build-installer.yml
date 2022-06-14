@@ -38,14 +38,13 @@ jobs:
       with:
         name: installer.exe
         path: .\windows-installer\sasm_installer.exe
-    - name: Change Directory
-      run: cd .\windows-installer\
     - uses: marvinpinto/action-automatic-releases@latest
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         automatic_release_tag: "latest"
         prerelease: false
+        title: "Automatic Build"
         files: |
-          sasm_installer.exe
+          D:\a\Sasm\Sasm\windows-installer\sasm_installer.exe
             
       
