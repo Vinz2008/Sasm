@@ -31,4 +31,12 @@ jobs:
       with:
         name: installer.exe
         path: .\windows-installer\sasm_installer.exe
+    - name: Creating Release
+      uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            .\windows-installer\sasm_installer.exe
+            
       
