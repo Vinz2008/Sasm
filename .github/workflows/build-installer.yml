@@ -23,7 +23,7 @@ jobs:
         platform: x64
     - name : build the app
       run: |
-        make
+        make windows
     - name: generate installer with NSIS script
       run: |
         makensis .\windows-installer\installer.nsi
