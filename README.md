@@ -15,6 +15,7 @@ There are a compiler from SASM to Intel x86 Linux 32 bit assembly written in C.
 ### Windows installer
 Launch the Windows installer from the release  
 It will automatically install sasm and add it to the PATH with [PathEd](https://github.com/awaescher/PathEd)
+It could be out of date because of failed github actions so it is recommended to compile sasm from source.
 ## Building from Source
 
 ### Linux, Macos and other Unix/BSD
