@@ -35,7 +35,7 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
     while (fgets(line,40, fptr)) {
         removeCharFromString('\t', line);
         i++;
-        int similarity_data_section = 0;
+        /*int similarity_data_section = 0;
         for (i = 0; i < 12; i++)
         {
         if ("data section"[i] == line[i])
@@ -44,13 +44,17 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         }
         }
         /*printf("similarity_data_section: %i\n", similarity_data_section);*/
-        if (similarity_data_section >= 12)
+        /*if (similarity_data_section >= 12)
         {
         fprintf(fptr2, "section .data\n");
         /*printf("written section .data\n");*/
-        }
-        else if (startswith("start:", line) == 1)
-        {
+        //}
+
+	if (startswith("data section", line) == 1){
+	fprintf(fptr2, "section .data\n");
+        /*printf("written section .data\n");*/
+	}
+        else if (startswith("start:", line) == 1){
 	fprintf(fptr2, "\tglobal _start\n_start:\n");
         /*printf("written global _start\n");*/
         }
