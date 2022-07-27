@@ -16,7 +16,6 @@ jobs:
         irm get.scoop.sh -outfile 'install.ps1'
         .\install.ps1 -RunAsAdmin
         scoop bucket add extras
-        [Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"
         scoop install nsis
     - name: Set up MinGW
       uses: egor-tensin/setup-mingw@v2
