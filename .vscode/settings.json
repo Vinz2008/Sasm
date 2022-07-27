@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "stdlib.h": "c"
+        "io": "llvm",
+        "std": "llvm",
+        "stdlib.h": "c",
+        "test.h": "c",
+        "stdio.h": "c",
+        "color.h": "c"
     }
 }

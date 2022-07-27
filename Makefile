@@ -18,15 +18,14 @@ all:
 
 clean:
 	rm -rf $(TARGET) build sasm-tests code.asm examples/*.asm examples/*.o
+	make -C tests clean
 run:
 	./sasm test.sasm
 test:
-	mkdir build
-	$(CC) -c -g libs/startswith.c -o build/startswith.o
-	$(CC) -c -g libs/detect_arch.c -o build/detect_arch.o
-	$(CC) -c -g tests/test.c -o build/test.o
-	$(CC) -o sasm-tests build/test.o build/startswith.o build/detect_arch.o
-	rm -rf build
+	make -C tests
+
+run_test:
+	./tests/sasm-tests
 
 windows:
 	mkdir build

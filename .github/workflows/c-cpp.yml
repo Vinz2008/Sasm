@@ -22,4 +22,4 @@ jobs:
     - name: make test compiling
       run: make test
     - name: make test runnning
-      run: ./sasm-tests
+      run: make run_test

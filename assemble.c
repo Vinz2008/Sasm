@@ -472,46 +472,40 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
             }
     }
     // VARIABLES
-	else
-        {
-        if (IsDebugMode == 1) {
+    else{
+    	if (IsDebugMode == 1) {
         printf("line: %s", line);
         printf("strlen(line) : %li\n", strlen(line));
         }
         char line2[40];
         strcpy(line2, line);
         int c = 0;
-	int posLastQuote;
-	int posFirstQuote;
-	int sizeLineList = 0;
+		int posLastQuote;
+		int posFirstQuote;
+		int sizeLineList = 0;
         char lineList[10][10];
-	char *pch = strtok(line," ");
-	memset(lineList,0,sizeof(lineList));
-	while (pch != NULL)
-	{
-	sizeLineList++;
+		char *pch = strtok(line," ");
+		memset(lineList,0,sizeof(lineList));
+		while (pch != NULL){
+		sizeLineList++;
         if (IsDebugMode == 1) {
     	printf ("pch : %s\n",pch);
         printf("startswith(pch) : %i\n",startswith("\"", pch));
         }
-	if (startswith("\"", pch)) 
-	{
-	for (i = 0; i < strlen(line2); i++)
-  	{
-  	if(line2[i] == '"')  
-	{
-	posFirstQuote = i;
+		if (startswith("\"", pch)) {
+		for (i = 0; i < strlen(line2); i++){
+  		if(line2[i] == '"')  {
+		posFirstQuote = i;
         if (IsDebugMode == 1) {
         printf ("posFirstQuote: %i\n", posFirstQuote);
         }
-	break;    	
- 	}
-	}
+		break;    	
+ 		}
+		}
         if (IsDebugMode == 1) {
         printf("strlen(line2) : %li\n", strlen(line2));
         }
-	for (i = posFirstQuote + 1; i < strlen(line2); i++)
-        {
+		for (i = posFirstQuote + 1; i < strlen(line2); i++){
         if(line2[i] == '"')
         {
         posLastQuote = i + 1;
@@ -523,80 +517,75 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         }
         int w = 0;
         //printf("lineList[sizeLineList] : %s", lineList[sizeLineList]);
-	for (i = posFirstQuote; i < posLastQuote; i++) 
-	{
-	lineList[sizeLineList][w] = line2[i]; 
+		for (i = posFirstQuote; i < posLastQuote; i++){
+		lineList[sizeLineList][w] = line2[i]; 
         if (IsDebugMode == 1) {
         printf("lineList[sizeLineList] %s\n", lineList[sizeLineList]);
         }
         w++;
-	}
+		}
         //lineList[sizeLineList][w] = "\0";
-	break;
-	}
+		break;
+		}
         else if(startswith("1", pch)||startswith("2", pch)||startswith("3", pch)||startswith("4", pch)||startswith("5", pch)||startswith("6", pch)||startswith("7", pch)||startswith("8", pch)||startswith("9", pch)||startswith("10", pch)){
                 strcpy(lineList[sizeLineList], pch);
                 break; 
         }
-	else 
-	{
-	strcpy(lineList[c], pch);
+		else{
+		strcpy(lineList[c], pch);
     	//pch = strtok (NULL, " \t");
-	pch = strtok (NULL, " ");
-	}
-	c++;
-	}
-	int d= 0;
-	/*while (lineList[d] != "") 
-	{
-	sizeLineList++;
-	d++;
-	}*/
-	/*
+		pch = strtok (NULL, " ");
+		}
+		c++;
+		}
+		int d= 0;
+		/*while (lineList[d] != "") 
+		{
+		sizeLineList++;
+		d++;
+		}*/
+		/*
         for (i = 0; i < sizeLineList; i++)
         {
         printf("lineList: %s", lineList[i]);
-	fprintf(fptr2, "%s ",lineList[i]);
+		fprintf(fptr2, "%s ",lineList[i]);
         }*/
-	// CHAR
-	if (startswith("char", lineList[1])) 
-	{
-	fprintf(fptr2, "%s ", lineList[0]);
-	fprintf(fptr2, "DB ");
+		// CHAR
+		if (startswith("char", lineList[1])){
+		fprintf(fptr2, "%s ", lineList[0]);
+		fprintf(fptr2, "DB ");
         if (IsDebugMode == 1) {
         printf("lineList[2] %s\n ", lineList[sizeLineList]);
         }
-	fprintf(fptr2, "%s ", lineList[sizeLineList]);
-	}
-	// TWOCHAR
-	else if (startswith("twoChar", lineList[1])) 
-	{
-	fprintf(fptr2, "%s ", lineList[0]);
-	fprintf(fptr2, "DW ");
+		fprintf(fptr2, "%s ", lineList[sizeLineList]);
+		}
+		// TWOCHAR
+		else if (startswith("twoChar", lineList[1])){
+		fprintf(fptr2, "%s ", lineList[0]);
+		fprintf(fptr2, "DW ");
         if (IsDebugMode == 1) {
         printf("lineList[2] %s\n ", lineList[2]);
         }
-	fprintf(fptr2, "%s ", lineList[sizeLineList]);
-	}
-	// FOURCHAR
-        else if (startswith("fourChar", lineList[1]))
-	{
-	fprintf(fptr2, "%s ", lineList[0]);
+		fprintf(fptr2, "%s ", lineList[sizeLineList]);
+		}
+		// FOURCHAR
+        else if (startswith("fourChar", lineList[1])){
+		fprintf(fptr2, "%s ", lineList[0]);
         if (IsDebugMode == 1) {
-	printf("lineList[0] %s\n", lineList[0]);
+		printf("lineList[0] %s\n", lineList[0]);
         }
-	fprintf(fptr2, "DD ");
+		fprintf(fptr2, "DD ");
         if (IsDebugMode == 1) {
-	printf("lineList[2] %s\n ", lineList[sizeLineList]);
+		printf("lineList[2] %s\n ", lineList[sizeLineList]);
         }
-	fprintf(fptr2, "%s ", lineList[sizeLineList]);
-	}
-	fprintf(fptr2, "\n");
+		fprintf(fptr2, "%s ", lineList[sizeLineList]);
+		}
+		fprintf(fptr2, "\n");
         if (IsDebugMode == 1) {
-	printf("backslash n\n");
+		printf("backslash n\n");
         }
-	memset(lineList,0,sizeof(lineList));
-        }
+		memset(lineList,0,sizeof(lineList));
+    }
         if (IsDebugMode == 1) {
         printf("%s\n", line);
         }
