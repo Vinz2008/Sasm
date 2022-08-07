@@ -15,15 +15,12 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
     FILE *fptr;
     FILE *fptr2;
     FILE *fptrtemp;
-    char line[40]/*[20]*/;
+    char line[40];
     fptr = fopen(filetocompile, "r");
-    if (fptr == NULL)
-    {
-        printf(BRED "Error! The file is empty\n" reset);   
+    if (fptr == NULL){
+        printf(BRED "Error! The file is empty\n" reset);
         exit(1);
     }
-    /*fgets(line, "%s", fptr);
-    printf("%s", line);*/
     int i;
     int i2;
     int posStartTo;
@@ -35,28 +32,11 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
     while (fgets(line,40, fptr)) {
         removeCharFromString('\t', line);
         i++;
-        /*int similarity_data_section = 0;
-        for (i = 0; i < 12; i++)
-        {
-        if ("data section"[i] == line[i])
-        {
-        similarity_data_section++;
-        }
-        }
-        /*printf("similarity_data_section: %i\n", similarity_data_section);*/
-        /*if (similarity_data_section >= 12)
-        {
-        fprintf(fptr2, "section .data\n");
-        /*printf("written section .data\n");*/
-        //}
-
 	if (startswith("data section", line) == 1){
 	fprintf(fptr2, "section .data\n");
-        /*printf("written section .data\n");*/
 	}
         else if (startswith("start:", line) == 1){
 	fprintf(fptr2, "\tglobal _start\n_start:\n");
-        /*printf("written global _start\n");*/
         }
         else if(line[strlen(line) - 2] == ':' && startswith("asm", line)==0 && startswith("\tasm",line)==0){
                 char functionName[10];
@@ -77,8 +57,7 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         fprintf(fptr2, "section .bss\n");
         }
         //MOV
-        else if (startswith("move", line)) 
-        {
+        else if (startswith("move", line)){
         fprintf(fptr2, "\tmov ");
         posStartTo = 0;
         int pos;
@@ -89,12 +68,9 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         if (IsDebugMode == 1) {
         printf("line[pos] : %c\n", line[pos]);
         }
-        if (line[pos] == '<') 
-        {
-        if (line[pos + 1] == '=') 
-        {
-        if (line[pos + 2] == ' ') 
-        {
+        if (line[pos] == '<'){
+        if (line[pos + 1] == '='){
+        if (line[pos + 2] == ' '){
         loopStartFrom = pos + 3;
         } else {
         loopStartFrom = pos + 2;
@@ -104,7 +80,7 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         loopEndTo = pos - 2;
         } else {
         loopEndTo = pos - 1;
-        }         
+        }
         }
         }
         }
@@ -178,10 +154,9 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         tempWrite = line[i];
 	fprintf(fptr2, "%c", tempWrite);
         }
-        } 
+        }
         //ADD
-        else if (startswith("add", line)) 
-        {
+        else if (startswith("add", line)){
         fprintf(fptr2, "\tadd ");
         posStartTo = 0;
         int pos;
@@ -192,19 +167,16 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         if (IsDebugMode == 1) {
         printf("line[pos] : %c\n", line[pos]);
         }
-        if (line[pos] == '<') 
-        {
+        if (line[pos] == '<'){
         if (IsDebugMode == 1) {
         printf("< detected\n");
         }
-        if (line[pos + 1] == '=') 
-        {
+        if (line[pos + 1] == '='){
         if (IsDebugMode == 1) {
         printf("= detected\n");
         printf("<= detected\n");
         }
-        if (line[pos + 2] == ' ') 
-        {
+        if (line[pos + 2] == ' '){
         loopStartFrom = pos + 3;
         } else {
         loopStartFrom = pos + 2;
