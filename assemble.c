@@ -15,15 +15,12 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
     FILE *fptr;
     FILE *fptr2;
     FILE *fptrtemp;
-    char line[40]/*[20]*/;
+    char line[40];
     fptr = fopen(filetocompile, "r");
-    if (fptr == NULL)
-    {
-        printf(BRED "Error! The file is empty\n" reset);   
+    if (fptr == NULL){
+        printf(BRED "Error! The file is empty\n" reset);
         exit(1);
     }
-    /*fgets(line, "%s", fptr);
-    printf("%s", line);*/
     int i;
     int i2;
     int posStartTo;
@@ -61,8 +58,7 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         fprintf(fptr2, "section .bss\n");
         }
         //MOV
-        else if (startswith("move", line)) 
-        {
+        else if (startswith("move", line)){
         fprintf(fptr2, "\tmov ");
         posStartTo = 0;
         int pos;
@@ -73,12 +69,9 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         if (IsDebugMode == 1) {
         printf("line[pos] : %c\n", line[pos]);
         }
-        if (line[pos] == '<') 
-        {
-        if (line[pos + 1] == '=') 
-        {
-        if (line[pos + 2] == ' ') 
-        {
+        if (line[pos] == '<'){
+        if (line[pos + 1] == '='){
+        if (line[pos + 2] == ' '){
         loopStartFrom = pos + 3;
         } else {
         loopStartFrom = pos + 2;
@@ -88,7 +81,7 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         loopEndTo = pos - 2;
         } else {
         loopEndTo = pos - 1;
-        }         
+        }
         }
         }
         }
@@ -162,10 +155,9 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         tempWrite = line[i];
 	fprintf(fptr2, "%c", tempWrite);
         }
-        } 
+        }
         //ADD
-        else if (startswith("add", line)) 
-        {
+        else if (startswith("add", line)){
         fprintf(fptr2, "\tadd ");
         posStartTo = 0;
         int pos;
@@ -176,19 +168,16 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         if (IsDebugMode == 1) {
         printf("line[pos] : %c\n", line[pos]);
         }
-        if (line[pos] == '<') 
-        {
+        if (line[pos] == '<'){
         if (IsDebugMode == 1) {
         printf("< detected\n");
         }
-        if (line[pos + 1] == '=') 
-        {
+        if (line[pos + 1] == '='){
         if (IsDebugMode == 1) {
         printf("= detected\n");
         printf("<= detected\n");
         }
-        if (line[pos + 2] == ' ') 
-        {
+        if (line[pos + 2] == ' '){
         loopStartFrom = pos + 3;
         } else {
         loopStartFrom = pos + 2;

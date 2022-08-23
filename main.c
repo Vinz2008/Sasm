@@ -8,12 +8,6 @@
 #include "libs/color.h"
 #include "libs/usage.h"
 
-/*#ifdef _WIN32
-#define ARGUMENT_START 1
-#else
-#define ARGUMENT_START 0
-#endif
-*/
 #define ARGUMENT_START 1
 
 
@@ -21,16 +15,12 @@
 int main(int argc, char* argv[]){
     int i;
     int a;
-    if(argc==1)
-    {
+    if(argc==1){
     printf(BRED "ERROR: No Extra Command Line Argument Passed Other Than Program Name\n" reset);
     printf(GRN "Do --help to know how to use this cli application\n" reset);
     exit(0);
     }
-    else
-    {
-    //printf("%s\n", argv[1]);
-    //printf("%c\n", argc);
+    else {
     int similarity_compile;
     char argument[100];
     int filenameFound = 0;
@@ -39,14 +29,18 @@ int main(int argc, char* argv[]){
     char* inputFilename;
     int IsDebugMode = 0;
     int IsForced = 0;
+<<<<<<< HEAD
     int IsNasmMode = 0;
     int IsLdMode = 0;
     char* outputFile = "code.asm";
     for (i=ARGUMENT_START;i<argc;i++) 
+=======
+    char outputFile[15] = "code.asm";
+    for (i=ARGUMENT_START;i<argc;i++)
+>>>>>>> 4d8a6656258e9d5bbecf09602b2a1d5c5a355f91
     {
     //printf("argv[%i] : %s\n",i, argv[i]);
     if(strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0){
-    //printf(BLU "USAGE : work in progress, it will be done later\n" reset);
     usage();
     exit(0);
     }
@@ -83,9 +77,14 @@ int main(int argc, char* argv[]){
     exit(1);
     }
     else {
+<<<<<<< HEAD
     inputFilename = argv[i];
     filenameFound = 1;
     //printf("filename found\n");
+=======
+    	strcpy(inputFilename,argv[i]);
+    	filenameFound = 1;
+>>>>>>> 4d8a6656258e9d5bbecf09602b2a1d5c5a355f91
     }
     }
     if (filenameFound == 0){
@@ -93,6 +92,7 @@ int main(int argc, char* argv[]){
 	exit(1);
     }
     if (FileExtensionCmp(inputFilename,"sasm") == 0 && IsForced == 0) {
+<<<<<<< HEAD
             printf(BRED "ERROR: filename %s is not a sasm file.\n", inputFilename);
             printf(reset);
             printf("if you want to force the execution of this file, use the -f flag\n");
@@ -101,6 +101,15 @@ int main(int argc, char* argv[]){
     if (argv[1] != NULL){
     //compile(argv[1]);
     assemble(inputFilename, outputFile, IsDebugMode, IsNasmMode, IsLdMode);
+=======
+	printf(BRED "ERROR: filename %s is not a sasm file.\n", inputFilename);
+    	printf(reset);
+    	printf("if you want to force the execution of this file, use the -f flag\n");
+    	exit(0);
+    }
+    if (argv[1] != NULL){
+    	assemble(inputFilename, outputFile, IsDebugMode);
+>>>>>>> 4d8a6656258e9d5bbecf09602b2a1d5c5a355f91
     }
     }
     return 0;
