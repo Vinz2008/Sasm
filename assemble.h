@@ -1,1 +1,1 @@
-int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode);
+int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmMode, int IsLdMode);

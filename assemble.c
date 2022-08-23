@@ -4,14 +4,14 @@
 #include <string.h>
 #include "libs/startswith.h"
 #include "libs/detect_arch.h"
-#include "libs/detect_file_extension.h"
+#include "libs/file.h"
 #include "libs/color.h"
 #include "libs/usage.h"
 #include "libs/removeCharFromString.h"
 
 #define ARGUMENT_START 1
 
-int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
+int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmMode, int IsLdMode) {
     FILE *fptr;
     FILE *fptr2;
     FILE *fptrtemp;
@@ -33,30 +33,14 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
     fclose(fptrtemp);
     fptr2 = fopen(outputFile, "a");
     while (fgets(line,40, fptr)) {
+        if (strcmp(line, "\n") != 0 || strcmp(line,"\r\n") != 0){
         removeCharFromString('\t', line);
         i++;
-        /*int similarity_data_section = 0;
-        for (i = 0; i < 12; i++)
-        {
-        if ("data section"[i] == line[i])
-        {
-        similarity_data_section++;
-        }
-        }
-        /*printf("similarity_data_section: %i\n", similarity_data_section);*/
-        /*if (similarity_data_section >= 12)
-        {
-        fprintf(fptr2, "section .data\n");
-        /*printf("written section .data\n");*/
-        //}
-
 	if (startswith("data section", line) == 1){
 	fprintf(fptr2, "section .data\n");
-        /*printf("written section .data\n");*/
 	}
         else if (startswith("start:", line) == 1){
 	fprintf(fptr2, "\tglobal _start\n_start:\n");
-        /*printf("written global _start\n");*/
         }
         else if(line[strlen(line) - 2] == ':' && startswith("asm", line)==0 && startswith("\tasm",line)==0){
                 char functionName[10];
@@ -594,9 +578,21 @@ int assemble(char filetocompile[30], char outputFile[15], int IsDebugMode) {
         printf("%s\n", line);
         }
     }
+    }
     fprintf(fptr2, "\n");
-    //fprintf(fptr2, "\tret\n");
     fclose(fptr);
     fclose(fptr2);
+    if (IsNasmMode == 1){
+        char* temp = malloc(50 * sizeof(char));
+        sprintf(temp, "nasm -f elf %s -o code.o", outputFile);
+        system(temp);
+        free(temp);
+    }
+    if (IsLdMode == 1){
+        char* temp2 = malloc(100 * sizeof(char));
+        sprintf(temp2, "ld code.o -o %s", removeFileExtension("code.o"));
+        system(temp2);
+        free(temp2);
+    }
     return 0;
 }

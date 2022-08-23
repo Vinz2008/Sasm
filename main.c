@@ -4,7 +4,7 @@
 #include "assemble.h"
 #include "libs/startswith.h"
 #include "libs/detect_arch.h"
-#include "libs/detect_file_extension.h"
+#include "libs/file.h"
 #include "libs/color.h"
 #include "libs/usage.h"
 
@@ -36,10 +36,12 @@ int main(int argc, char* argv[]){
     int filenameFound = 0;
     strcpy(argument, argv[1]);
     char archArg[10];
-    char inputFilename[30];
+    char* inputFilename;
     int IsDebugMode = 0;
     int IsForced = 0;
-    char outputFile[15] = "code.asm";
+    int IsNasmMode = 0;
+    int IsLdMode = 0;
+    char* outputFile = "code.asm";
     for (i=ARGUMENT_START;i<argc;i++) 
     {
     //printf("argv[%i] : %s\n",i, argv[i]);
@@ -63,32 +65,42 @@ int main(int argc, char* argv[]){
     }
     else if (strcmp(argv[i], "-o") == 0 || strcmp(argv[i], "--output") == 0){
     i++;
-    strcpy(outputFile, argv[i]);
+    outputFile = argv[i];
+    }
+    else if (strcmp(argv[i], "-n") == 0 || strcmp(argv[i], "--nasm") == 0){
+        IsNasmMode = 1;
+    }
+    else if (strcmp(argv[i], "-ld") == 0 || strcmp(argv[i], "--linker") == 0){
+        if (IsNasmMode == 0){
+                printf("ERROR : you can't run the linker without running nasm\n");
+                exit(1);
+        }
+        IsLdMode = 1;
     }
     else if(startswith("-", argv[i])){
     printf(BRED "ERROR : Invalid option\n" reset);
     printf(BLU "try -h for the list of the options\n" reset);
-    exit(0);
+    exit(1);
     }
     else {
-    strcpy(inputFilename,argv[i]);
+    inputFilename = argv[i];
     filenameFound = 1;
     //printf("filename found\n");
     }
     }
     if (filenameFound == 0){
 	printf(BRED "ERROR: No filename was specified\n" reset);
-	exit(0);
+	exit(1);
     }
     if (FileExtensionCmp(inputFilename,"sasm") == 0 && IsForced == 0) {
             printf(BRED "ERROR: filename %s is not a sasm file.\n", inputFilename);
             printf(reset);
             printf("if you want to force the execution of this file, use the -f flag\n");
-            exit(0);
+            exit(1);
     }
     if (argv[1] != NULL){
     //compile(argv[1]);
-    assemble(inputFilename, outputFile, IsDebugMode);
+    assemble(inputFilename, outputFile, IsDebugMode, IsNasmMode, IsLdMode);
     }
     }
     return 0;

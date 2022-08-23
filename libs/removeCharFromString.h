@@ -1,1 +1,1 @@
-extern int removeCharFromString(char charToRemove, char *str);
+int removeCharFromString(char charToRemove, char *str);

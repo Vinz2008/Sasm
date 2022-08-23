@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../libs/detect_file_extension.h"
+#include "../libs/file.h"
 #include "../libs/color.h"
 
 int test_detect_file_extension(){

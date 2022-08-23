@@ -21,8 +21,7 @@ start:
 	pop edx
 	do-nothing
 	test eax and eax
-	jumpzeroflag short loc_40102B
-
+#	jumpzeroflag short loc_40102B
 # comment
 
 
