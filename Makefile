@@ -12,7 +12,7 @@ all:
 	$(CC) -c -g emulator.c -o build/emulator.o
 	$(CC) -c -g main.c -o build/main.o
 	$(CC) -c -g assemble.c -o build/assemble.o
-	$(CC) -o sasm build/main.o build/startswith.o build/detect_arch.o build/file.o build/usage.o build/assemble.o build/removeCharFromString.o
+	$(CC) -o sasm build/main.o build/emulator.o build/startswith.o build/detect_arch.o build/file.o build/usage.o build/assemble.o build/removeCharFromString.o
 	rm -rf build
 
 

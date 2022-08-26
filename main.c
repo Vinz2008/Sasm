@@ -7,6 +7,7 @@
 #include "libs/file.h"
 #include "libs/color.h"
 #include "libs/usage.h"
+#include "emulator.h"
 
 #define ARGUMENT_START 1
 
@@ -31,6 +32,7 @@ int main(int argc, char* argv[]){
     int IsForced = 0;
     int IsNasmMode = 0;
     int IsLdMode = 0;
+    int IsEmulating = 0;
     char* outputFile = "code.asm";
     for (i=ARGUMENT_START;i<argc;i++) 
     {
@@ -66,6 +68,9 @@ int main(int argc, char* argv[]){
         }
         IsLdMode = 1;
     }
+    else if (strcmp(argv[i], "--emulator") == 0){
+        IsEmulating = 1;
+    }
     else if(startswith("-", argv[i])){
     printf(BRED "ERROR : Invalid option\n" reset);
     printf(BLU "try -h for the list of the options\n" reset);
@@ -87,7 +92,11 @@ int main(int argc, char* argv[]){
         exit(1);
     }
     if (argv[1] != NULL){
-    assemble(inputFilename, outputFile, IsDebugMode, IsNasmMode, IsLdMode);
+    if (IsEmulating == 1){
+        emulate(inputFilename, outputFile, IsDebugMode);
+    } else {
+        assemble(inputFilename, outputFile, IsDebugMode, IsNasmMode, IsLdMode);
+    }
     }
     }
     return 0;

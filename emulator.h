@@ -18,3 +18,5 @@ typedef struct _Stackentry {
 struct Stack {
 	StackEntry* stackList;
 };
+
+void emulate(char* inputFile, char* outputFile, int IsDebugMode);

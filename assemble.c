@@ -474,7 +474,7 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
   		if(line2[i] == '"')  {
 		posFirstQuote = i;
         if (IsDebugMode == 1) {
-        printf ("posFirstQuote: %i\n", posFirstQuote);
+                printf ("posFirstQuote: %i\n", posFirstQuote);
         }
 		break;    	
  		}
@@ -494,59 +494,47 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         }
         int w = 0;
         //printf("lineList[sizeLineList] : %s", lineList[sizeLineList]);
-		for (i = posFirstQuote; i < posLastQuote; i++){
-		lineList[sizeLineList][w] = line2[i]; 
+	for (i = posFirstQuote; i < posLastQuote; i++){
+	lineList[sizeLineList][w] = line2[i]; 
         if (IsDebugMode == 1) {
         printf("lineList[sizeLineList] %s\n", lineList[sizeLineList]);
         }
         w++;
-		}
+	}
         //lineList[sizeLineList][w] = "\0";
-		break;
-		}
+	break;
+	}
         else if(startswith("1", pch)||startswith("2", pch)||startswith("3", pch)||startswith("4", pch)||startswith("5", pch)||startswith("6", pch)||startswith("7", pch)||startswith("8", pch)||startswith("9", pch)||startswith("10", pch)){
                 strcpy(lineList[sizeLineList], pch);
                 break; 
         }
-		else{
-		strcpy(lineList[c], pch);
-    	//pch = strtok (NULL, " \t");
-		pch = strtok (NULL, " ");
-		}
-		c++;
-		}
-		int d= 0;
-		/*while (lineList[d] != "") 
-		{
-		sizeLineList++;
-		d++;
-		}*/
-		/*
-        for (i = 0; i < sizeLineList; i++)
-        {
-        printf("lineList: %s", lineList[i]);
-		fprintf(fptr2, "%s ",lineList[i]);
-        }*/
-		// CHAR
-		if (startswith("char", lineList[1])){
-		fprintf(fptr2, "%s ", lineList[0]);
+	else{
+	strcpy(lineList[c], pch);
+	pch = strtok (NULL, " ");
+	}
+	c++;
+	}
+	int d= 0;
+	// CHAR
+	if (startswith("char", lineList[1])){
+	        fprintf(fptr2, "%s ", lineList[0]);
 		fprintf(fptr2, "DB ");
-        if (IsDebugMode == 1) {
-        printf("lineList[2] %s\n ", lineList[sizeLineList]);
-        }
+                if (IsDebugMode == 1) {
+                printf("lineList[2] %s\n ", lineList[sizeLineList]);
+                }
 		fprintf(fptr2, "%s ", lineList[sizeLineList]);
-		}
-		// TWOCHAR
-		else if (startswith("twoChar", lineList[1])){
+	}
+	// TWOCHAR
+	else if (startswith("twoChar", lineList[1])){
 		fprintf(fptr2, "%s ", lineList[0]);
 		fprintf(fptr2, "DW ");
         if (IsDebugMode == 1) {
         printf("lineList[2] %s\n ", lineList[2]);
         }
 		fprintf(fptr2, "%s ", lineList[sizeLineList]);
-		}
-		// FOURCHAR
-        else if (startswith("fourChar", lineList[1])){
+	}
+	// FOURCHAR
+    else if (startswith("fourChar", lineList[1])){
 		fprintf(fptr2, "%s ", lineList[0]);
         if (IsDebugMode == 1) {
 		printf("lineList[0] %s\n", lineList[0]);
@@ -554,18 +542,18 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
 		fprintf(fptr2, "DD ");
         if (IsDebugMode == 1) {
 		printf("lineList[2] %s\n ", lineList[sizeLineList]);
-        }
+    	}
 		fprintf(fptr2, "%s ", lineList[sizeLineList]);
-		}
-		fprintf(fptr2, "\n");
-        if (IsDebugMode == 1) {
-		printf("backslash n\n");
-        }
-		memset(lineList,0,sizeof(lineList));
+	}
+	fprintf(fptr2, "\n");
+    if (IsDebugMode == 1) {
+	printf("backslash n\n");
     }
-        if (IsDebugMode == 1) {
-        printf("%s\n", line);
-        }
+	memset(lineList,0,sizeof(lineList));
+    }
+    if (IsDebugMode == 1) {
+    printf("%s\n", line);
+    }
     }
     }
     fprintf(fptr2, "\n");
