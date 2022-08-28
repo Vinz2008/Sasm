@@ -6,7 +6,7 @@
 int FileExtensionCmp(char* filename, char* extension) {
 	int i;
 	int i2;
-	int pointPos;
+	int pointPos = -1;
 	char* filenameExtension;
 	char temp[10];
 	for (i=0;i<strlen(filename);i++){
@@ -34,8 +34,7 @@ int FileExtensionCmp(char* filename, char* extension) {
 char* removeFileExtension(char* filename){
     int i;
 	int i2;
-	int pointPos;
-	char* filenameExtension;
+	int pointPos = -1;
 	char* temp = malloc(30 * sizeof(char));
 	for (i=0;i<strlen(filename);i++){
 	if (filename[i] == '.'){
@@ -54,7 +53,6 @@ char* replaceFileExtension(char* filename, char* extension){
 	int i2;
     int i4 = 0;
 	int pointPos;
-	char* filenameExtension;
 	char* temp = malloc(30 * sizeof(char));
 	for (i=0;i<strlen(filename);i++){
 	if (filename[i] == '.'){

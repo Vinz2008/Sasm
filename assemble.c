@@ -2,14 +2,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "instructions_handlers.h"
 #include "libs/startswith.h"
 #include "libs/detect_arch.h"
 #include "libs/file.h"
 #include "libs/color.h"
 #include "libs/usage.h"
 #include "libs/removeCharFromString.h"
-
-#define ARGUMENT_START 1
 
 int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmMode, int IsLdMode) {
     FILE *fptr;
@@ -22,10 +21,9 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         exit(1);
     }
     int i;
-    int i2;
-    int posStartTo;
-    int loopEndTo;
-    int loopStartFrom;
+    int posStartTo = -1;
+    int loopEndTo = -1;
+    int loopStartFrom = -1;
     fptrtemp = fopen(outputFile, "w");
     fclose(fptrtemp);
     fptr2 = fopen(outputFile, "a");
@@ -33,136 +31,42 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         if (strcmp(line, "\n") != 0 || strcmp(line,"\r\n") != 0){
         removeCharFromString('\t', line);
         i++;
-	if (startswith("data section", line) == 1){
-	fprintf(fptr2, "section .data\n");
-	}
+		if (startswith("data section", line) == 1){
+		fprintf(fptr2, "section .data\n");
+		}
         else if (startswith("start:", line) == 1){
-	fprintf(fptr2, "\tglobal _start\n_start:\n");
+		fprintf(fptr2, "\tglobal _start\n_start:\n");
         }
         else if(line[strlen(line) - 2] == ':' && startswith("asm", line)==0 && startswith("\tasm",line)==0){
-                char functionName[10];
-                memset(functionName, 0, sizeof(functionName));
-                for (i = 0; i < strlen(line) - 1; i++){
-                        functionName[i] = line[i];
-                }
+        char functionName[10];
+        memset(functionName, 0, sizeof(functionName));
+        for (i = 0; i < strlen(line) - 1; i++){
+            functionName[i] = line[i];
+        }
                 if (IsDebugMode == 1) {
                         printf("function %s detected\n", functionName);
                 }
                 fprintf(fptr2, "%s", line);
         }
-        else if (startswith("text section", line) == 1)
-        {
-        fprintf(fptr2, "section .text\n");
+        else if (startswith("code section", line) == 1){
+        	code_section_handler(fptr2);
         }
         else if(startswith("variable section", line)){
-        fprintf(fptr2, "section .bss\n");
+        	variable_section_handler(fptr2);
         }
         //MOV
         else if (startswith("move", line)){
-        fprintf(fptr2, "\tmov ");
-        posStartTo = 0;
-        int pos;
-        char movFrom[10];
-        char movTo[10];
-        for (pos = 5; pos < strlen(line); pos++)
-        {
-        if (IsDebugMode == 1) {
-        printf("line[pos] : %c\n", line[pos]);
-        }
-        if (line[pos] == '<'){
-        if (line[pos + 1] == '='){
-        if (line[pos + 2] == ' '){
-        loopStartFrom = pos + 3;
-        } else {
-        loopStartFrom = pos + 2;
-        }
-        if (line[pos - 1] == ' ')
-        {
-        loopEndTo = pos - 2;
-        } else {
-        loopEndTo = pos - 1;
-        }
-        }
-        }
-        }
-        int lengthMovTo;
-        char tempWrite; 
-        for (i = 5; i <= loopEndTo; i++) {
-        tempWrite = line[i];
-	fprintf(fptr2, "%c", tempWrite);
-        if (IsDebugMode == 1) {
-        printf("i: %i\n", i);
-        }
-        }
-	fprintf(fptr2, ",");
-        for (i = loopStartFrom; i< strlen(line); i++) 
-	{
-        tempWrite = line[i];
-	fprintf(fptr2, "%c", tempWrite);
-        }
+            move_handler(line, fptr2, IsDebugMode);
         } 
         //CMP
-	else if (startswith("compare", line)) 
-        {
-        fprintf(fptr2, "\tcmp ");
-        posStartTo = 0;
-        int pos;
-        char movFrom[10];
-        char movTo[10];
-        for (pos = 8; pos < strlen(line); pos++)
-        {
-        if (IsDebugMode == 1) {
-        printf("line[pos] : %c\n", line[pos]);
-        }
-        if (line[pos] == '<') 
-        {
-        if (IsDebugMode == 1) {
-        printf("< detected\n");
-        }
-        if (line[pos + 1] == '=') 
-        {
-        if (IsDebugMode == 1) {
-        printf("= detected\n");
-        printf("<= detected\n");
-        }
-        if (line[pos + 2] == ' ') 
-        {
-        loopStartFrom = pos + 3;
-        } else {
-        loopStartFrom = pos + 2;
-        }
-        if (line[pos - 1] == ' ')
-        {
-        loopEndTo = pos - 2;
-        } else {
-        loopEndTo = pos - 1;
-        }         
-        }
-        }
-        }
-        int lengthMovTo;
-        char tempWrite; 
-        for (i = 8; i <= loopEndTo; i++) {
-        tempWrite = line[i];
-	fprintf(fptr2, "%c", tempWrite);
-        if (IsDebugMode == 1) {
-        printf("i: %i\n", i);
-        }
-        }
-	fprintf(fptr2, ",");
-        for (i = loopStartFrom; i< strlen(line); i++) 
-	{
-        tempWrite = line[i];
-	fprintf(fptr2, "%c", tempWrite);
-        }
+		else if (startswith("compare", line)){
+			compare_handler(line, fptr2, IsDebugMode);
         }
         //ADD
         else if (startswith("add", line)){
         fprintf(fptr2, "\tadd ");
         posStartTo = 0;
         int pos;
-        char movFrom[10];
-        char movTo[10];
         for (pos = 4; pos < strlen(line); pos++)
         {
         if (IsDebugMode == 1) {
@@ -191,7 +95,6 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         }
         }
         }
-        int lengthMovTo;
         char tempWrite; 
         for (i = 4; i <= loopEndTo; i++) {
         tempWrite = line[i];
@@ -213,8 +116,6 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         fprintf(fptr2, "\tand ");
         posStartTo = 0;
         int pos;
-        char movFrom[10];
-        char movTo[10];
         for (pos = 3; pos < strlen(line); pos++)
         {
         if (IsDebugMode == 1) {
@@ -237,16 +138,10 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         } else {
         loopStartFrom = pos + 2;
         }
-        /*if (line[pos - 1] == " "[0])
-        {
-        loopEndTo = pos - 2;
-        } else {*/
-        loopEndTo = pos - 1;
-        /*}  */       
+        loopEndTo = pos - 1;      
         }
         }
         }
-        int lengthMovTo;
         char tempWrite; 
         for (i = 3; i <= loopEndTo; i++) {
         tempWrite = line[i];
@@ -277,8 +172,6 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         }
         posStartTo = 0;
         int pos;
-        char movFrom[10];
-        char movTo[10];
         for (pos = 7; pos < strlen(line); pos++)
         {
         if (IsDebugMode == 1) {
@@ -324,11 +217,8 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         printf("int\n");
         }
         fprintf(fptr2, "\tint ");
-        int z = 0;
         posStartTo = 0;
         int pos;
-        char movFrom[10];
-        char movTo[10];
         for (pos = 10; pos < strlen(line); pos++)
         {
         if (IsDebugMode == 1) {
@@ -345,55 +235,14 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
 	else if(startswith("multiply", line)){
 	fprintf(fptr2, "\tmul ");
 	posStartTo = 0;
-        int pos;
-        char movFrom[10];
-        char movTo[10];
-	/*for (pos = 10; pos < strlen(line); pos++)
-        {
-        if (IsDebugMode == 1) {
-        printf("line[pos] : %c\n", line[pos]);
-        }
-        if (line[pos] == '<')
-        {
-        if (IsDebugMode == 1) {
-        printf("< detected\n");
-        }
-        if (line[pos + 1] ==  '=')
-        {
-        if (IsDebugMode == 1) {
-        printf("= detected\n");
-        printf("<= detected\n");
-        }
-        if (line[pos + 2] == ' ')
-        {
-        loopStartFrom = pos + 3;
-        } else {
-        loopStartFrom = pos + 2;
-	}
-        if (line[pos - 1] == ' ')
-        {
-        loopEndTo = pos - 2;
-        } else {
-        loopEndTo = pos - 1;
-        }
-        }
-        }
-        }*/
-        int lengthMovTo;
-        char tempWrite;
-        for (i = 9; i <= strlen(line); i++) {
+    char tempWrite;
+    for (i = 9; i <= strlen(line); i++) {
         tempWrite = line[i];
         fprintf(fptr2, "%c", tempWrite);
         if (IsDebugMode == 1) {
         printf("i: %i\n", i);
         }
-        }
-        /*fprintf(fptr2, ",");
-	for (i = loopStartFrom; i< strlen(line); i++)
-        {
-        tempWrite = line[i];
-        fprintf(fptr2, "%c", tempWrite);
-        }*/
+    }
 	}
 	//RETURN
 	else if (startswith("return", line)){
@@ -457,8 +306,8 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         char line2[40];
         strcpy(line2, line);
         int c = 0;
-		int posLastQuote;
-		int posFirstQuote;
+		int posLastQuote = -1;
+		int posFirstQuote = -1;
 		int sizeLineList = 0;
         char lineList[10][10];
 		char *pch = strtok(line," ");
@@ -514,7 +363,6 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
 	}
 	c++;
 	}
-	int d= 0;
 	// CHAR
 	if (startswith("char", lineList[1])){
 	        fprintf(fptr2, "%s ", lineList[0]);

@@ -15,18 +15,16 @@
 
 int main(int argc, char* argv[]){
     int i;
-    int a;
     if(argc==1){
     printf(BRED "ERROR: No Extra Command Line Argument Passed Other Than Program Name\n" reset);
     printf(GRN "Do --help to know how to use this cli application\n" reset);
     exit(0);
     }
     else {
-    int similarity_compile;
     char argument[100];
     int filenameFound = 0;
     strcpy(argument, argv[1]);
-    char archArg[10];
+    //char archArg[10];
     char* inputFilename;
     int IsDebugMode = 0;
     int IsForced = 0;
@@ -34,8 +32,7 @@ int main(int argc, char* argv[]){
     int IsLdMode = 0;
     int IsEmulating = 0;
     char* outputFile = "code.asm";
-    for (i=ARGUMENT_START;i<argc;i++) 
-    {
+    for (i=ARGUMENT_START;i<argc;i++) {
     //printf("argv[%i] : %s\n",i, argv[i]);
     if(strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0){
     usage();

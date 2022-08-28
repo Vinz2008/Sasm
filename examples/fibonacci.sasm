@@ -1,5 +1,5 @@
 # according to https://github.com/luc99a/Assembly-Codes/blob/master/fibonacci.asm
-text section
+code section
 
 start:
 	move eax <= 1

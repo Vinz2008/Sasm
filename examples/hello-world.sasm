@@ -4,7 +4,7 @@ data section
 # length message
 	asm len equ $ - msg
 
-text section
+code section
 
 # start function
 start:

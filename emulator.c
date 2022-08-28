@@ -9,28 +9,41 @@ struct Registers registers;
 
 
 void init_registers(struct Registers registers){
-	registers.eax = 0;
-	registers.ebx = 0;
-	registers.ecx = 0;
-	registers.edx = 0;
+	registers.eax = 1;
+	registers.ebx = 2;
+	registers.ecx = 3;
+	registers.edx = 4;
 }
 
-_register* strToRegister(char* reg){
+void setRegister(uint16_t value, char* reg){
 	if (strcmp(reg, "eax") == 0){
-		return &registers.eax;
+		registers.eax = value;
 	} else if (startswith("ebx", reg)){
-		printf("ebx\n");
-		return &registers.ebx;
+		registers.ebx = value;
 	} else if (strcmp(reg, "ecx") == 0){
-		return &registers.ecx;
+		registers.ecx = value;
 	} else if (strcmp(reg, "edx") == 0){
-		return &registers.edx;
+		registers.edx = value;
 	} else {
 		printf("ERROR : can't find register %s\n", reg);
 		exit(1);
 	}
 }
 
+_register getRegister(char* reg){
+	if (strcmp(reg, "eax") == 0){
+		return registers.eax;
+	} else if (startswith("ebx", reg)){
+		return registers.ebx;
+	} else if (strcmp(reg, "ecx") == 0){
+		return registers.ecx;
+	} else if (strcmp(reg, "edx") == 0){
+		return registers.edx;
+	} else {
+		printf("ERROR : can't find register %s\n", reg);
+		exit(1);
+	}
+}
 
 void showRegisters(struct Registers registers){
 	printf("eax : %d\n", registers.eax);
@@ -57,7 +70,7 @@ void emulate(char* inputFile, char* outputFile, int IsDebugMode){
 		char line2[40];
         strcpy(line2, line);
 		int sizeLineList = 0;
-		int posLastQuote;
+		int posLastQuote = -1;
 		int posFirstQuote;
 		char lineList[10][10];
 		int c = 0;
@@ -103,20 +116,15 @@ void emulate(char* inputFile, char* outputFile, int IsDebugMode){
 		c++;
 		}
 		if (IsDebugMode == 1) {
-		printf("lineList[0] : %s\n", lineList[0]);
+			for ( i = 0; i < sizeLineList; i++){
+				printf("lineList[%d] : %s\n",i, lineList[i]);
+			}
 		}
 		if (startswith("add", lineList[0])){
-			_register* tempPtr1 =  strToRegister(lineList[1]);
-			printf("lineList[3] : %s\n", lineList[3]);
-			_register* tempPtr2 = strToRegister(lineList[3]);
-			printf("*tempPtr : %d\n", *tempPtr1);
-			//*tempPtr = *tempPtr + *tempPtr2;
-			printf("*tempPtr2 : %d\n", *tempPtr2);
-			_register* tempPtr3;
-			printf("result : %d\n", *tempPtr1 + *tempPtr2);
-			*tempPtr3 = *tempPtr1 + *tempPtr2;
+			printf("reg1 : %d\n", getRegister(lineList[1]));
+			setRegister(getRegister(lineList[1]) + getRegister(lineList[3]), lineList[1]);
+			printf("result : %d\n", getRegister(lineList[1]) + getRegister(lineList[3]));
 			printf("TEST \n");
-			*tempPtr1 = *tempPtr3;
 		}
 	}
 	fclose(fptrIn);

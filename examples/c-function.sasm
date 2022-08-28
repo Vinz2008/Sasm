@@ -2,7 +2,7 @@ c-function printf
 data section
 	msg char "Hello world"
 	asm fmt DB "%s", 10, 0 
-text section
+code section
 start:
 	push ebp
 	move edi <= fmt
