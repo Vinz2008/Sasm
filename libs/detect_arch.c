@@ -1,33 +1,24 @@
 #include "detect_arch.h"
 #include <stdio.h>
 #ifdef __x86_64__
-#define ARCH "x86_64"
-#define ARCHNUMBER 1
+#define ARCH ARCH_X86_64
 #elif __amd64__
-#define ARCH "amd64"
-#define ARCHNUMBER 2
+#define ARCH ARCH_AMD64
 #elif __arm__
-#define ARCH "arm"
-#define ARCHNUMBER 3
+#define ARCH ARCH_ARM
 #elif __aarch64__
-#define ARCH "aarch64"
-#define ARCHNUMBER 4
+#define ARCH ARCH_AARCH64
 #elif __i386__
-#define ARCH "i386"
-#define ARCHNUMBER 5
+#define ARCH ARCH_I386
 #elif __ia64__
-#define ARCH "ia64"
-#define ARCHNUMBER 6
+#define ARCH ARCH_IA64
 #elif __powerpc__
-#define ARCH "powerpc"
-#define ARCHNUMBER 7
+#define ARCH ARCH_POWERPC
 #else
-#define ARCH "unknown"
-#define ARCHNUMBER 0
+#define ARCH ARCH_UNKNOWN
 #endif
 int detect_arch() {
-	printf("%s\n",ARCH);
-	return ARCHNUMBER;
+	return ARCH;
 }
 /*
 int main() {

@@ -2,7 +2,7 @@ CC=gcc
 TARGET=sasm
 CFLAGS=-c -g -Wall -O2
 
-all: setup build/startswith.o build/detect_arch.o build/file.o build/removeCharFromString.o build/usage.o build/instructions_handlers.o build/emulator.o build/main.o build/assemble.o sasm clean-build
+all: setup build/startswith.o build/detect_arch.o build/file.o build/removeCharFromString.o build/usage.o build/instructions_handlers.o build/emulator.o build/main.o build/assemble.o build/instructions_handlers_i386.o sasm clean-build
 
 setup:
 ifeq ($(OS),Windows_NT)
@@ -39,8 +39,11 @@ build/main.o:
 build/assemble.o:
 	$(CC) $(CFLAGS) assemble.c -o build/assemble.o
 
+build/instructions_handlers_i386.o:
+	$(CC) $(CFLAGS) arch/i386/instructions_handlers_i386.c -o build/instructions_handlers_i386.o
+
 sasm:
-	$(CC) -o sasm build/main.o build/emulator.o build/instructions_handlers.o build/startswith.o build/detect_arch.o build/file.o build/usage.o build/assemble.o build/removeCharFromString.o
+	$(CC) -o sasm build/main.o build/emulator.o build/instructions_handlers.o build/startswith.o build/detect_arch.o build/file.o build/usage.o build/assemble.o build/instructions_handlers_i386.o build/removeCharFromString.o
 	rm -rf build
 
 clean-build:
