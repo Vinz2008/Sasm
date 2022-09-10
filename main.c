@@ -90,10 +90,10 @@ int main(int argc, char* argv[]){
     }
     if (argv[1] != NULL){
     if (IsEmulating == 1){
-        emulate(inputFilename, outputFile, IsDebugMode);
-    } else {
-        assemble(inputFilename, outputFile, IsDebugMode, IsNasmMode, IsLdMode);
-    }
+        init_emulator(inputFilename, outputFile, IsDebugMode);
+    } 
+    assemble(inputFilename, outputFile, IsDebugMode, IsNasmMode, IsLdMode, IsEmulating);
+
     }
     }
     return 0;

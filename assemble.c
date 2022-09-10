@@ -10,7 +10,7 @@
 #include "libs/usage.h"
 #include "libs/removeCharFromString.h"
 
-int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmMode, int IsLdMode) {
+int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmMode, int IsLdMode, int IsEmulating) {
     FILE *fptr;
     FILE *fptr2;
     FILE *fptrtemp;
@@ -49,18 +49,18 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
                 fprintf(fptr2, "%s", line);
         }
         else if (startswith("code section", line) == 1){
-        	code_section_handler(fptr2);
+        	code_section_handler(fptr2, 0);
         }
         else if(startswith("variable section", line)){
-        	variable_section_handler(fptr2);
+        	variable_section_handler(fptr2, 0);
         }
         //MOV
         else if (startswith("move", line)){
-            move_handler(line, fptr2, IsDebugMode);
+            move_handler(line, fptr2, IsDebugMode, 0);
         } 
         //CMP
 		else if (startswith("compare", line)){
-			compare_handler(line, fptr2, IsDebugMode);
+			compare_handler(line, fptr2, IsDebugMode, 0);
         }
         //ADD
         else if (startswith("add", line)){
