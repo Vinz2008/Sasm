@@ -4,7 +4,6 @@
 
 
 void code_section_handler_i386(FILE* fptr){
-    printf("SECTION CODE\n");
     fprintf(fptr, "section .text\n");
 }
 

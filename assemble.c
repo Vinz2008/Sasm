@@ -28,281 +28,6 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
     fclose(fptrtemp);
     fptr2 = fopen(outputFile, "a");
     while (fgets(line,40, fptr)) {
-        if (strcmp(line, "\n") != 0 || strcmp(line,"\r\n") != 0){
-        removeCharFromString('\t', line);
-        i++;
-		if (startswith("data section", line) == 1){
-		fprintf(fptr2, "section .data\n");
-		}
-        else if (startswith("start:", line) == 1){
-		fprintf(fptr2, "\tglobal _start\n_start:\n");
-        }
-        else if(line[strlen(line) - 2] == ':' && startswith("asm", line)==0 && startswith("\tasm",line)==0){
-        char functionName[10];
-        memset(functionName, 0, sizeof(functionName));
-        for (i = 0; i < strlen(line) - 1; i++){
-            functionName[i] = line[i];
-        }
-                if (IsDebugMode == 1) {
-                        printf("function %s detected\n", functionName);
-                }
-                fprintf(fptr2, "%s", line);
-        }
-        else if (startswith("code section", line) == 1){
-        	code_section_handler(fptr2, 0);
-        }
-        else if(startswith("variable section", line)){
-        	variable_section_handler(fptr2, 0);
-        }
-        //MOV
-        else if (startswith("move", line)){
-            move_handler(line, fptr2, IsDebugMode, 0);
-        } 
-        //CMP
-		else if (startswith("compare", line)){
-			compare_handler(line, fptr2, IsDebugMode, 0);
-        }
-        //ADD
-        else if (startswith("add", line)){
-        fprintf(fptr2, "\tadd ");
-        posStartTo = 0;
-        int pos;
-        for (pos = 4; pos < strlen(line); pos++)
-        {
-        if (IsDebugMode == 1) {
-        printf("line[pos] : %c\n", line[pos]);
-        }
-        if (line[pos] == '<'){
-        if (IsDebugMode == 1) {
-        printf("< detected\n");
-        }
-        if (line[pos + 1] == '='){
-        if (IsDebugMode == 1) {
-        printf("= detected\n");
-        printf("<= detected\n");
-        }
-        if (line[pos + 2] == ' '){
-        loopStartFrom = pos + 3;
-        } else {
-        loopStartFrom = pos + 2;
-        }
-        if (line[pos - 1] == ' ')
-        {
-        loopEndTo = pos - 2;
-        } else {
-        loopEndTo = pos - 1;
-        }         
-        }
-        }
-        }
-        char tempWrite; 
-        for (i = 4; i <= loopEndTo; i++) {
-        tempWrite = line[i];
-	fprintf(fptr2, "%c", tempWrite);
-        if (IsDebugMode == 1) {
-        printf("i: %i\n", i);
-        }
-        }
-	fprintf(fptr2, ",");
-        for (i = loopStartFrom; i< strlen(line); i++) 
-	{
-        tempWrite = line[i];
-	fprintf(fptr2, "%c", tempWrite);
-        }
-        } 
-        //AND
-        else if (startswith("and", line)) 
-        {
-        fprintf(fptr2, "\tand ");
-        posStartTo = 0;
-        int pos;
-        for (pos = 3; pos < strlen(line); pos++)
-        {
-        if (IsDebugMode == 1) {
-        printf("line[pos] : %c\n", line[pos]);
-        }
-        if (line[pos] == '<') 
-        {
-        if (IsDebugMode == 1) {
-        printf("< detected\n");
-        }
-        if (line[pos + 1] == '=') 
-        {
-        if (IsDebugMode == 1) {
-        printf("= detected\n");
-        printf("<= detected\n");
-        }
-        if (line[pos + 2] == ' ') 
-        {
-        loopStartFrom = pos + 3;
-        } else {
-        loopStartFrom = pos + 2;
-        }
-        loopEndTo = pos - 1;      
-        }
-        }
-        }
-        char tempWrite; 
-        for (i = 3; i <= loopEndTo; i++) {
-        tempWrite = line[i];
-	fprintf(fptr2, "%c", tempWrite);
-        if (IsDebugMode == 1) {
-        printf("i: %i\n", i);
-        }
-        }
-	fprintf(fptr2, ",");
-        for (i = loopStartFrom; i< strlen(line); i++) 
-	{
-        tempWrite = line[i];
-	fprintf(fptr2, "%c", tempWrite);
-        }
-        } 
-        //CALL
-        else if (startswith("launch", line)) {
-        fprintf(fptr2, "\tcall ");
-        int z = 0;
-        char functionName[20];
-        for (i = 7; i < strlen(line); i++) {
-                functionName[z] = line[i];
-                z++;
-        }
-        
-        if (startswith("start", functionName)) {
-                fprintf(fptr2, "_");
-        }
-        posStartTo = 0;
-        int pos;
-        for (pos = 7; pos < strlen(line); pos++)
-        {
-        if (IsDebugMode == 1) {
-        printf("line[pos] : %c\n", line[pos]);
-        }
-        fprintf(fptr2, "%c", line[pos]);
-        }
-        if (IsDebugMode == 1) {
-        printf("i: %i\n", i);
-        }
-        }
-	// PUSH
-	else if (startswith("push", line)){
-        fprintf(fptr2,"\t");
-	fprintf(fptr2,"%s",line);
-	}
-	// POP
-	else if (startswith("pop", line)){
-        fprintf(fptr2,"\t");
-        fprintf(fptr2,"%s",line);
-        }
-	// C-FUNCTION / GLOBAL-FUNCTION
-	else if (startswith("c-function",line) || startswith("global-function", line)){
-	fprintf(fptr2, "extern ");
-	int FirstPosFunction = startswith("c-function",line) == 1 ? 11 : 15;
-	for (i = FirstPosFunction; i < strlen(line); i++){
-	fprintf(fptr2, "%c", line[i]);
-	}
-	}
-        // comments
-        else if (startswith("#", line)) 
-        {
-        fprintf(fptr2, ";");
-        for (i = 1; i < strlen(line) - 1; i++) 
-        {
-        fprintf(fptr2, "%c", line[i]);
-        }
-	fprintf(fptr2, "\n");
-        }
-	//INTERRUPT
-        else if (startswith("interrupt", line)) {
-        if (IsDebugMode == 1) {
-        printf("int\n");
-        }
-        fprintf(fptr2, "\tint ");
-        posStartTo = 0;
-        int pos;
-        for (pos = 10; pos < strlen(line); pos++)
-        {
-        if (IsDebugMode == 1) {
-        printf("line[pos] : %c\n", line[pos]);
-        }
-        fprintf(fptr2, "%c", line[pos]);
-        }
-        }
-	//DO-NOTHING
-	else if(startswith("do-nothing", line)){
-	fprintf(fptr2, "\tnop\n");
-	}
-	//MULTIPLY
-	else if(startswith("multiply", line)){
-	fprintf(fptr2, "\tmul ");
-	posStartTo = 0;
-    char tempWrite;
-    for (i = 9; i <= strlen(line); i++) {
-        tempWrite = line[i];
-        fprintf(fptr2, "%c", tempWrite);
-        if (IsDebugMode == 1) {
-        printf("i: %i\n", i);
-        }
-    }
-	}
-	//RETURN
-	else if (startswith("return", line)){
-        if (IsDebugMode == 1) {
-	printf("return\n");
-        }
-	fprintf(fptr2,"\tret");
-	fprintf(fptr2, "\n");
-	}
-	//ASEMBLY CODE USAGE
-	else if(startswith("asm",line)){
-        if (IsDebugMode == 1) {
-	    printf("asm\n");
-        }
-	fprintf(fptr2, "\t");
-	int pos;
-	for (pos = 4; pos < strlen(line); pos++) 
-	{
-        if (IsDebugMode == 1) {
-	    printf("line[pos] : %c\n", line[pos]);
-        }
-        fprintf(fptr2, "%c", line[pos]);
-	}
-	}
-    // TEST
-    else if(startswith("test", line)){
-        if (IsDebugMode == 1) {
-	    printf("test\n");
-        }
-        fprintf(fptr2, "\t");
-        fprintf(fptr2, "test ");
-        int pos;
-        for (pos = 5; pos < strlen(line); pos++){
-            
-            if (line[pos + 1] == 'a' && line[pos + 2] == 'n' && line[pos + 3] == 'd' ){
-                fprintf(fptr2, ",");
-                pos += 4;
-                break;
-            } else {
-                fprintf(fptr2,"%c",line[pos]);
-            }
-        }
-        for (pos = pos; pos < strlen(line); pos ++){
-            fprintf(fptr2,"%c",line[pos]);
-        }
-
-    }
-    else if(startswith("jumpzeroflag", line)){
-            fprintf(fptr2, "\tjnz ");
-            int pos;
-            for (pos = 11; pos < strlen(line); pos++){ 
-                fprintf(fptr2,"%c",line[pos]);
-            }
-    }
-    // VARIABLES
-    else{
-    	if (IsDebugMode == 1) {
-        printf("line: %s", line);
-        printf("strlen(line) : %li\n", strlen(line));
-        }
         char line2[40];
         strcpy(line2, line);
         int c = 0;
@@ -363,6 +88,282 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
 	}
 	c++;
 	}
+    if (strcmp(line2, "\n") != 0 || strcmp(line2,"\r\n") != 0){
+        removeCharFromString('\t', line2);
+        i++;
+		if (startswith("data", lineList[0]) && startswith("section", lineList[1])){
+		fprintf(fptr2, "section .data\n");
+		}
+        else if (startswith("start:", lineList[0]) == 1){
+		fprintf(fptr2, "\tglobal _start\n_start:\n");
+        }
+        else if(line2[strlen(line2) - 2] == ':' && startswith("asm", lineList[0])==0 && startswith("\tasm",lineList[0])==0){
+        char functionName[10];
+        memset(functionName, 0, sizeof(functionName));
+        for (i = 0; i < strlen(line2) - 1; i++){
+            functionName[i] = line2[i];
+        }
+                if (IsDebugMode == 1) {
+                        printf("function %s detected\n", functionName);
+                }
+                fprintf(fptr2, "%s", line2);
+        }
+        else if (startswith("code section", line2) == 1){
+        	code_section_handler(fptr2, 0);
+        }
+        else if(startswith("variable section", line2)){
+        	variable_section_handler(fptr2, 0);
+        }
+        //MOV
+        else if (startswith("move", line2)){
+            move_handler(line2, fptr2, IsDebugMode, 0);
+        } 
+        //CMP
+		else if (startswith("compare", line2)){
+			compare_handler(line2, fptr2, IsDebugMode, 0);
+        }
+        //ADD
+        else if (startswith("add", line2)){
+        fprintf(fptr2, "\tadd ");
+        posStartTo = 0;
+        int pos;
+        for (pos = 4; pos < strlen(line2); pos++)
+        {
+        if (IsDebugMode == 1) {
+        printf("line2[pos] : %c\n", line2[pos]);
+        }
+        if (line2[pos] == '<'){
+        if (IsDebugMode == 1) {
+        printf("< detected\n");
+        }
+        if (line2[pos + 1] == '='){
+        if (IsDebugMode == 1) {
+        printf("= detected\n");
+        printf("<= detected\n");
+        }
+        if (line2[pos + 2] == ' '){
+        loopStartFrom = pos + 3;
+        } else {
+        loopStartFrom = pos + 2;
+        }
+        if (line2[pos - 1] == ' ')
+        {
+        loopEndTo = pos - 2;
+        } else {
+        loopEndTo = pos - 1;
+        }         
+        }
+        }
+        }
+        char tempWrite; 
+        for (i = 4; i <= loopEndTo; i++) {
+        tempWrite = line2[i];
+	fprintf(fptr2, "%c", tempWrite);
+        if (IsDebugMode == 1) {
+        printf("i: %i\n", i);
+        }
+        }
+	fprintf(fptr2, ",");
+        for (i = loopStartFrom; i< strlen(line2); i++) 
+	{
+        tempWrite = line2[i];
+	fprintf(fptr2, "%c", tempWrite);
+        }
+        } 
+        //AND
+        else if (startswith("and", line2)) 
+        {
+        fprintf(fptr2, "\tand ");
+        posStartTo = 0;
+        int pos;
+        for (pos = 3; pos < strlen(line2); pos++)
+        {
+        if (IsDebugMode == 1) {
+        printf("line2[pos] : %c\n", line2[pos]);
+        }
+        if (line2[pos] == '<') 
+        {
+        if (IsDebugMode == 1) {
+        printf("< detected\n");
+        }
+        if (line2[pos + 1] == '=') 
+        {
+        if (IsDebugMode == 1) {
+        printf("= detected\n");
+        printf("<= detected\n");
+        }
+        if (line2[pos + 2] == ' ') 
+        {
+        loopStartFrom = pos + 3;
+        } else {
+        loopStartFrom = pos + 2;
+        }
+        loopEndTo = pos - 1;      
+        }
+        }
+        }
+        char tempWrite; 
+        for (i = 3; i <= loopEndTo; i++) {
+        tempWrite = line2[i];
+	fprintf(fptr2, "%c", tempWrite);
+        if (IsDebugMode == 1) {
+        printf("i: %i\n", i);
+        }
+        }
+	fprintf(fptr2, ",");
+        for (i = loopStartFrom; i< strlen(line2); i++) 
+	{
+        tempWrite = line2[i];
+	fprintf(fptr2, "%c", tempWrite);
+        }
+        } 
+        //CALL
+        else if (startswith("launch", line2)) {
+        fprintf(fptr2, "\tcall ");
+        int z = 0;
+        char functionName[20];
+        for (i = 7; i < strlen(line2); i++) {
+                functionName[z] = line2[i];
+                z++;
+        }
+        
+        if (startswith("start", functionName)) {
+                fprintf(fptr2, "_");
+        }
+        posStartTo = 0;
+        int pos;
+        for (pos = 7; pos < strlen(line2); pos++)
+        {
+        if (IsDebugMode == 1) {
+        printf("line2[pos] : %c\n", line2[pos]);
+        }
+        fprintf(fptr2, "%c", line2[pos]);
+        }
+        if (IsDebugMode == 1) {
+        printf("i: %i\n", i);
+        }
+        }
+	// PUSH
+	else if (startswith("push", line2)){
+        fprintf(fptr2,"\t");
+	fprintf(fptr2,"%s",line2);
+	}
+	// POP
+	else if (startswith("pop", line2)){
+        fprintf(fptr2,"\t");
+        fprintf(fptr2,"%s",line2);
+        }
+	// C-FUNCTION / GLOBAL-FUNCTION
+	else if (startswith("c-function",line2) || startswith("global-function", line2)){
+	fprintf(fptr2, "extern ");
+	int FirstPosFunction = startswith("c-function",line2) == 1 ? 11 : 15;
+	for (i = FirstPosFunction; i < strlen(line2); i++){
+	fprintf(fptr2, "%c", line2[i]);
+	}
+	}
+        // comments
+        else if (startswith("#", line2)) 
+        {
+        fprintf(fptr2, ";");
+        for (i = 1; i < strlen(line2) - 1; i++) 
+        {
+        fprintf(fptr2, "%c", line2[i]);
+        }
+	fprintf(fptr2, "\n");
+        }
+	//INTERRUPT
+        else if (startswith("interrupt", line2)) {
+        if (IsDebugMode == 1) {
+        printf("int\n");
+        }
+        fprintf(fptr2, "\tint ");
+        posStartTo = 0;
+        int pos;
+        for (pos = 10; pos < strlen(line2); pos++)
+        {
+        if (IsDebugMode == 1) {
+        printf("line2[pos] : %c\n", line2[pos]);
+        }
+        fprintf(fptr2, "%c", line2[pos]);
+        }
+        }
+	//DO-NOTHING
+	else if(startswith("do-nothing", line2)){
+	fprintf(fptr2, "\tnop\n");
+	}
+	//MULTIPLY
+	else if(startswith("multiply", line2)){
+	fprintf(fptr2, "\tmul ");
+	posStartTo = 0;
+    char tempWrite;
+    for (i = 9; i <= strlen(line2); i++) {
+        tempWrite = line2[i];
+        fprintf(fptr2, "%c", tempWrite);
+        if (IsDebugMode == 1) {
+        printf("i: %i\n", i);
+        }
+    }
+	}
+	//RETURN
+	else if (startswith("return", line2)){
+        if (IsDebugMode == 1) {
+	printf("return\n");
+        }
+	fprintf(fptr2,"\tret");
+	fprintf(fptr2, "\n");
+	}
+	//ASEMBLY CODE USAGE
+	else if(startswith("asm",line2)){
+        if (IsDebugMode == 1) {
+	    printf("asm\n");
+        }
+	fprintf(fptr2, "\t");
+	int pos;
+	for (pos = 4; pos < strlen(line2); pos++) 
+	{
+        if (IsDebugMode == 1) {
+	    printf("line2[pos] : %c\n", line2[pos]);
+        }
+        fprintf(fptr2, "%c", line2[pos]);
+	}
+	}
+    // TEST
+    else if(startswith("test", line2)){
+        if (IsDebugMode == 1) {
+	    printf("test\n");
+        }
+        fprintf(fptr2, "\t");
+        fprintf(fptr2, "test ");
+        int pos;
+        for (pos = 5; pos < strlen(line2); pos++){
+            
+            if (line2[pos + 1] == 'a' && line2[pos + 2] == 'n' && line2[pos + 3] == 'd' ){
+                fprintf(fptr2, ",");
+                pos += 4;
+                break;
+            } else {
+                fprintf(fptr2,"%c",line2[pos]);
+            }
+        }
+        for (pos = pos; pos < strlen(line2); pos ++){
+            fprintf(fptr2,"%c",line2[pos]);
+        }
+
+    }
+    else if(startswith("jumpzeroflag", line2)){
+            fprintf(fptr2, "\tjnz ");
+            int pos;
+            for (pos = 11; pos < strlen(line2); pos++){ 
+                fprintf(fptr2,"%c",line2[pos]);
+            }
+    }
+    // VARIABLES
+    else{
+    	if (IsDebugMode == 1) {
+        printf("line2: %s", line2);
+        printf("strlen(line2) : %li\n", strlen(line2));
+        }
+        
 	// CHAR
 	if (startswith("char", lineList[1])){
 	        fprintf(fptr2, "%s ", lineList[0]);
@@ -400,7 +401,7 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
 	memset(lineList,0,sizeof(lineList));
     }
     if (IsDebugMode == 1) {
-    printf("%s\n", line);
+    printf("%s\n", line2);
     }
     }
     }
