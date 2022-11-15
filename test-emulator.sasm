@@ -1,0 +1,8 @@
+code section
+start:
+	move edx <= 20
+	move ecx <= 20
+	move eax <= 5
+	move ecx <= 10
+	add eax <= ecx
+# comment

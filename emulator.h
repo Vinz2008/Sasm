@@ -20,3 +20,5 @@ struct Stack {
 };
 
 void init_emulator(char* inputFile, char* outputFile, int IsDebugMode);
+void move_handler_emulator(char line[], int IsDebugMode);
+void add_handler_emulator(char line[], int IsDebugMode);

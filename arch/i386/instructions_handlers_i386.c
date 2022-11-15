@@ -104,3 +104,52 @@ void compare_handler_i386(char line[], FILE* fptr, int IsDebugMode){
 	    fprintf(fptr, "%c", line[i]);
     }
 }
+
+void add_handler_i386(char line[], FILE* fptr, int IsDebugMode){
+    int i;
+    int loopStartFrom = 0;
+    int loopEndTo = 0;
+    fprintf(fptr, "\tadd ");
+    int posStartTo = 0;
+    int pos;
+    for (pos = 4; pos < strlen(line); pos++){
+        if (IsDebugMode == 1) {
+        printf("line2[pos] : %c\n", line[pos]);
+        }
+        if (line[pos] == '<'){
+        if (IsDebugMode == 1) {
+        printf("< detected\n");
+        }
+        if (line[pos + 1] == '='){
+        if (IsDebugMode == 1) {
+        printf("= detected\n");
+        printf("<= detected\n");
+        }
+        if (line[pos + 2] == ' '){
+        loopStartFrom = pos + 3;
+        } else {
+        loopStartFrom = pos + 2;
+        }
+        if (line[pos - 1] == ' ')
+        {
+        loopEndTo = pos - 2;
+        } else {
+        loopEndTo = pos - 1;
+        }         
+        }
+        }
+    }
+    char tempWrite; 
+    for (i = 4; i <= loopEndTo; i++) {
+        tempWrite = line[i];
+	    fprintf(fptr, "%c", tempWrite);
+        if (IsDebugMode == 1) {
+        printf("i: %i\n", i);
+        }
+    }
+	fprintf(fptr, ",");
+    for (i = loopStartFrom; i< strlen(line); i++) {
+        tempWrite = line[i];
+	    fprintf(fptr, "%c", tempWrite);
+    }
+}

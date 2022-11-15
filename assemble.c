@@ -109,14 +109,14 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
                 fprintf(fptr2, "%s", line2);
         }
         else if (startswith("code section", line2) == 1){
-        	code_section_handler(fptr2, 0);
+        	code_section_handler(fptr2, IsEmulating);
         }
         else if(startswith("variable section", line2)){
-        	variable_section_handler(fptr2, 0);
+        	variable_section_handler(fptr2, IsEmulating);
         }
         //MOV
         else if (startswith("move", line2)){
-            move_handler(line2, fptr2, IsDebugMode, 0);
+            move_handler(line2, fptr2, IsDebugMode, IsEmulating);
         } 
         //CMP
 		else if (startswith("compare", line2)){
@@ -124,51 +124,7 @@ int assemble(char* filetocompile, char* outputFile, int IsDebugMode, int IsNasmM
         }
         //ADD
         else if (startswith("add", line2)){
-        fprintf(fptr2, "\tadd ");
-        posStartTo = 0;
-        int pos;
-        for (pos = 4; pos < strlen(line2); pos++)
-        {
-        if (IsDebugMode == 1) {
-        printf("line2[pos] : %c\n", line2[pos]);
-        }
-        if (line2[pos] == '<'){
-        if (IsDebugMode == 1) {
-        printf("< detected\n");
-        }
-        if (line2[pos + 1] == '='){
-        if (IsDebugMode == 1) {
-        printf("= detected\n");
-        printf("<= detected\n");
-        }
-        if (line2[pos + 2] == ' '){
-        loopStartFrom = pos + 3;
-        } else {
-        loopStartFrom = pos + 2;
-        }
-        if (line2[pos - 1] == ' ')
-        {
-        loopEndTo = pos - 2;
-        } else {
-        loopEndTo = pos - 1;
-        }         
-        }
-        }
-        }
-        char tempWrite; 
-        for (i = 4; i <= loopEndTo; i++) {
-        tempWrite = line2[i];
-	fprintf(fptr2, "%c", tempWrite);
-        if (IsDebugMode == 1) {
-        printf("i: %i\n", i);
-        }
-        }
-	fprintf(fptr2, ",");
-        for (i = loopStartFrom; i< strlen(line2); i++) 
-	{
-        tempWrite = line2[i];
-	fprintf(fptr2, "%c", tempWrite);
-        }
+            add_handler(line2, fptr2, IsDebugMode, IsEmulating);
         } 
         //AND
         else if (startswith("and", line2)) 

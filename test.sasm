@@ -12,6 +12,7 @@ start:
 	move ecx <= 10
 	multiply ecx
 	add eax <= ebx
+	add edx <= ecx
 	and eax <= 0x7575
 	launch start
 	launch test
